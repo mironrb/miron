@@ -1,7 +1,7 @@
 module Miron
-  # Miron::Reponse allows HTTP responses to be sent.
-  #
   class Response
+    # Miron::Reponse allows HTTP responses to be sent.
+    #
     attr_reader :http_status, :options, :body
 
     # @param  [Integer] http_status
