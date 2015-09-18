@@ -10,8 +10,8 @@ module Miron
     # @param  [Hash] options
     #         the HTTP headers to return
     #
-    # @param [String] body
-    #        the HTTP body to return
+    # @param  [String] body
+    #         the HTTP body to return
     #
     def initialize(http_status, options, body)
       @http_status = http_status
