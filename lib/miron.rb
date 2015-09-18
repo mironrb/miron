@@ -1,5 +1,6 @@
-require "miron/version"
+require 'miron/version'
 
+# Miron: The Gem, The Myth, The Legend
+#
 module Miron
-  # Your code goes here...
 end
