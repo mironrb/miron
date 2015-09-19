@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require 'pathname'
+
+if !Dir.exist?(Pathname.pwd + "tmp")
+  Dir.mkdir("tmp")
+end
+
+puts "tmp was/has been created"
