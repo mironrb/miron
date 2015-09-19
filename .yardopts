@@ -1,0 +1,3 @@
+--markup markdown
+--exclude bin
+--exclude spec
