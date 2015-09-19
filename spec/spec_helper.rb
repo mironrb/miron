@@ -2,7 +2,6 @@ $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 
 require 'miron'
 require 'claide'
-require 'pathname'
 require 'fileutils'
 
 ROOT = Pathname.new(File.expand_path('../../', __FILE__))

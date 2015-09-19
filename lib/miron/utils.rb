@@ -1,6 +1,6 @@
 module Miron
   class Utils
-    # Returns the path of the Mironfile in the given dir if any exists.
+    # Returns the path of the Mironfile in the given dir, if any exists.
     #
     # @param  [Pathname] dir
     #         The directory where to look for the Mironfile.
@@ -15,6 +15,19 @@ module Miron
       else
         false
       end
+    end
+
+    # Returns the contents of the Mironfile in the given dir, if any exists.
+    #
+    # @param  [Pathname] dir
+    #         The directory where to look for the Mironfile.
+    #
+    # @return [String] The contents of the Mironfile.
+    # @return [Nil] If no Mironfile was found in the given dir
+    #
+    def self.mironfile(dir)
+      mironfile = dir + 'Mironfile'
+      return File.read(mironfile) if mironfile.exist?
     end
   end
 end

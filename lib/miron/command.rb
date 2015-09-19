@@ -3,6 +3,7 @@ require 'claide'
 module Miron
   class Command < CLAide::Command
     require 'miron/command/init'
+    require 'miron/command/server'
 
     self.abstract_command = true
     self.command = 'miron'
