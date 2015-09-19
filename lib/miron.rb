@@ -5,4 +5,5 @@ require 'miron/version'
 module Miron
   autoload :Command,  'miron/command'
   autoload :Response, 'miron/response'
+  autoload :Utils,    'miron/utils'
 end

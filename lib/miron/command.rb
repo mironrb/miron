@@ -2,6 +2,8 @@ require 'claide'
 
 module Miron
   class Command < CLAide::Command
+    require 'miron/command/init'
+
     self.abstract_command = true
     self.command = 'miron'
     self.version = VERSION
