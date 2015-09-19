@@ -2,8 +2,6 @@
 
 require 'pathname'
 
-if !Dir.exist?(Pathname.pwd + "tmp")
-  Dir.mkdir("tmp")
-end
+Dir.mkdir('tmp') unless Dir.exist?(Pathname.pwd + 'tmp')
 
-puts "tmp was/has been created"
+puts 'tmp was/has been created'
