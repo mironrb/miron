@@ -4,6 +4,16 @@
 
 A redesigned Ruby web interface.
 
-## License
+## Contributing
 
-Miron is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+See [CONTRIBUTING](CONTRIBUTING.md).
+
+## Upgrading
+
+See [CHANGELOG](CHANGELOG.md) for a history of changes and [UPGRADING](UPGRADING.md) for how to upgrade to more recent versions.
+
+## Copyright and License
+
+Copyright (c) 2015, [Jon Moss](https://twitter.com/applerebel), and [Contributors](CHANGELOG.md).
+
+This project is licensed under the [MIT License](LICENSE.md).
