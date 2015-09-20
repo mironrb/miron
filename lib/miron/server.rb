@@ -16,11 +16,17 @@ module Miron
     def initialize(mironfile, options)
       @mironfile = mironfile
       @options = options
+      resolve_handler
     end
 
     def start
+      @handler.run(mironfile, options)
+    end
+
+    private
+
+    def resolve_handler
       @handler = Miron::Handler.get(options['server'])
-      @handler.run
     end
   end
 end

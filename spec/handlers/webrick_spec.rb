@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Miron::Handler::WEBrick do
   describe 'In general' do
     it 'inherits from Miron::Handler::Base' do
-      expect(Miron::Handler::WEBrick.superclass).to eq(Miron::Handler::Base)
+      expect(Miron::Handler::WEBrick.superclass).to eq(WEBrick::HTTPServlet::AbstractServlet)
     end
 
     it 'responds to self.run' do
