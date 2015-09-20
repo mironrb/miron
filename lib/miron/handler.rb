@@ -17,9 +17,5 @@ module Miron
         Miron::Handler::WEBrick
       end
     end
-
-    # Base class for Miron handlers
-    class Base
-    end
   end
 end
