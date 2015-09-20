@@ -6,14 +6,16 @@ module Miron
 
       def self.options
         [
-          ['--port=PORT', 'Port to run the Mironfile on']
+          ['--port=PORT', 'Port to run the Mironfile on'],
+          ['--handler=HANDLER', 'Handler to use for your Miron-backed server']
         ].concat(super)
       end
 
       def initialize(argv)
         @mironfile = Miron::Utils.mironfile(Pathname.pwd)
         @options = {}
-        @options[:port] = argv.option('port') || '9290'
+        @options['port'] = argv.option('port') || '9290'
+        @options['server'] = argv.option('server')
         super
       end
 
@@ -23,7 +25,8 @@ module Miron
       end
 
       def run
-        Miron::Server.new(@mironfile, @options)
+        server = Miron::Server.new(@mironfile, @options)
+        server.start
       end
     end
   end

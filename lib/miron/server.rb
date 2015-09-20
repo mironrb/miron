@@ -3,6 +3,7 @@ module Miron
   #
   class Server
     attr_reader :mironfile, :options
+    attr_accessor :handler
 
     # @param  [String] mironfile
     #         A String of the mironfile that will be powering the {Miron::Server}
@@ -15,6 +16,11 @@ module Miron
     def initialize(mironfile, options)
       @mironfile = mironfile
       @options = options
+    end
+
+    def start
+      @handler = Miron::Handler.get(options['server'])
+      @handler.run
     end
   end
 end

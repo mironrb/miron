@@ -1,5 +1,3 @@
-require 'active_support/core_ext/string/strip'
-
 module Miron
   class Command
     class Init < Command
