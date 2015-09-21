@@ -23,8 +23,13 @@ module Miron
 
       def service(webrick_request, webrick_response)
         miron_request = webrick_request.meta_vars
-        miron_response = webrick_response
-        Miron::Request.new(miron_request, miron_response)
+        miron_response = Miron::Request.new(miron_request, webrick_response, @app).fetch_response
+
+        webrick_response.status = miron_response.http_status
+        webrick_response.body << miron_response.body
+        miron_response.headers.each { |k, v| webrick_response[k] = v }
+        miron_response.cookies.each { |k, v| webrick_response.cookies << "#{k}=#{v}" }
+        miron_response.body.close if miron_response.body.respond_to?(:close)
       end
 
       def shutdown

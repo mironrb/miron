@@ -9,6 +9,7 @@ module Miron
   autoload :Command,  'miron/command'
   autoload :Handler,  'miron/handler'
   autoload :Response, 'miron/response'
+  autoload :Request,  'miron/request'
   autoload :Server,   'miron/server'
   autoload :Utils,    'miron/utils'
 
