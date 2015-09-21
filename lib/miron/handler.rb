@@ -11,7 +11,7 @@ module Miron
     #         returns constant of {Miron::Handle::WEBrick}, if handler_name cannot be found
     #
     def self.get(handler_name)
-      if Miron::Handler.const_defined?(:"#{handler_name.capitalize}")
+      if !handler_name.nil? && Miron::Handler.const_defined?(:"#{handler_name.capitalize}")
         Miron::Handler.const_get(:"#{handler_name.capitalize}")
       else
         Miron::Handler::WEBrick

@@ -4,7 +4,7 @@ describe Miron::Server do
   describe 'In general' do
     it 'can be initialized' do
       server = Miron::Server.new('hello', { 'port' => 9290, 'server' => 'webrick' })
-      expect(server.mironfile).to eq('hello')
+      expect(server.app).to eq('hello')
       expect(server.options).to eq('port' => 9290, 'server' => 'webrick')
     end
   end

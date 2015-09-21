@@ -22,7 +22,7 @@ module Miron
     # @return [Response] returns the newly created {Miron::Response}
     #
     def fetch_response
-      @app.new.call(@miron_request)
+      @app.call(@miron_request)
     end
   end
 end

@@ -19,7 +19,7 @@ describe Miron::Command::Server do
     it 'complains if no mironfile is present' do
       Dir.chdir(SpecHelper.temporary_directory) do
         remove_mironfile(SpecHelper.temporary_directory)
-        expect { run_command('server', '--port=9290') }.to raise_error(CLAide::Help)
+        expect { run_command('server', '--port=9290') }.to raise_error(Errno::ENOENT)
       end
     end
   end

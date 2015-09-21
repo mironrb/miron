@@ -9,7 +9,7 @@ ROOT = Pathname.new(File.expand_path('../../', __FILE__))
 Dir[ROOT.join('spec/support/**/*.rb')].each { |f| require f }
 
 def create_mironfile(dir)
-  (dir + 'Mironfile').open('w') { |f| f << 'hello' }
+  (dir + 'Mironfile').open('w') { |f| f << '# hello' }
 end
 
 def get
@@ -28,7 +28,7 @@ def remove_mironfile(dir)
 end
 
 class Hi
-  def call(_request)
+  def self.call(_request)
     Miron::Response.new(200, {}, 'hi')
   end
 end
