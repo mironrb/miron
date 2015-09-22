@@ -14,8 +14,8 @@ module Miron
       def initialize(argv)
         @app = Miron::Mironfile.from_dir(Pathname.pwd).app
         @options = {}
-        @options['port'] = argv.option('port') || '9290'
-        @options['server'] = argv.option('server')
+        @options['port'] = argv.option('port') || 9290
+        @options['handler'] = argv.option('handler')
         super
       end
 

@@ -5,10 +5,7 @@ module Miron
   class Handler
     class WEBrick < ::WEBrick::HTTPServlet::AbstractServlet
       def self.run(app, options = {})
-        environment  = ENV['MIRON_ENV'] || 'development'
-        default_host = environment == 'development' ? 'localhost' : nil
-
-        options[:BindAddress] = options.delete(:Host) || default_host
+        options[:BindAddress] = options['host']
         options[:Port] = options['port']
         @server = ::WEBrick::HTTPServer.new(options)
         @server.mount('/', Miron::Handler::WEBrick, app)
