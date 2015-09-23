@@ -2,27 +2,28 @@ module Miron
   # Miron::Server allows HTTP responses to be sent.
   #
   class Server
-    attr_reader :app, :options
+    attr_reader :mironfile, :options
     attr_accessor :handler
 
-    # @param  [String] app
-    #         A String of the mironfile that will be powering the {Miron::Server}
+    # @param  [Mironfile] mironfile
+    #         An instance of {Miron::Mironfile} that will be powering the {Miron::Server}
     #
     # @param  [Hash] options
     #         A Hash of configuration options
     #
-    # @return [Response] returns the newly created {Miron::Response}
+    # @return [Response] returns the newly created {Miron::Server}
     #
-    def initialize(app, options)
-      @app = app
+    def initialize(mironfile, options)
+      @mironfile = mironfile
       @options = options
       resolve_handler
     end
 
     def start
+      require_relative File.expand_path(options['mironfile_path'])
       options['environment'] = ENV['MIRON_ENV'] || 'development'
       options['default_host'] = options['environment'] == 'development' ? 'localhost' : '0.0.0.0'
-      @handler.run(app, options)
+      @handler.run(@mironfile, options)
     end
 
     private

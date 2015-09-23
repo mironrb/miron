@@ -10,19 +10,23 @@ module Miron
     # @param  [Class] miron_response
     #         Response object (can be an instance of `WEBrick::Response`)
     #
-    # @param  [] app
-    #         App to perform a `.call` on
+    # @param  [Mironfile] mironfile
+    #         Mironfile that has the app and middleware to perform a `.call` on
     #
-    def initialize(miron_request, miron_response, app)
+    def initialize(miron_request, miron_response, mironfile)
       @miron_request = miron_request
       @miron_response = miron_response
-      @app = app
+      @mironfile = mironfile
     end
 
     # @return [Response] returns the newly created {Miron::Response}
     #
     def fetch_response
-      @app.call(@miron_request)
+      @mironfile.middleware.each do |middleware|
+        middleware.constantize.call(@miron_request)
+      end
+
+      @mironfile.app.constantize.call(@miron_request)
     end
   end
 end

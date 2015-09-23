@@ -12,10 +12,11 @@ module Miron
       end
 
       def initialize(argv)
-        @app = Miron::Mironfile.from_dir(Pathname.pwd).app
+        @mironfile = Miron::Mironfile.from_dir(Pathname.pwd)
         @options = {}
         @options['port'] = argv.option('port') || 9290
         @options['handler'] = argv.option('handler')
+        @options['mironfile_path'] = Pathname.pwd + 'Mironfile'
         super
       end
 
@@ -25,7 +26,7 @@ module Miron
       end
 
       def run
-        server = Miron::Server.new(@app, @options)
+        server = Miron::Server.new(@mironfile, @options)
         server.start
       end
     end
