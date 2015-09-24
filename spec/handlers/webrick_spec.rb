@@ -14,14 +14,6 @@ describe Miron::Handler::WEBrick do
   end
 
   describe 'Handler' do
-    #before do
-      #Thread.list(&:exit)
-      #create_mironfile(SpecHelper.temporary_directory)
-      #@mironfile = Miron::Mironfile.from_dir(SpecHelper.temporary_directory)
-      #server = Miron::Server.new(@mironfile, { 'handler' => 'webrick', 'host' => '0.0.0.0', 'server' => 'webrick', 'port' => '9290' })
-      #@thread = Thread.new { server.start }
-      #trap(:INT) { @thread.exit }
-    #end
     sample_app
 
     it 'returns the correct HTTP status' do
