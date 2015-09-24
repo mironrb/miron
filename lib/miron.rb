@@ -1,6 +1,7 @@
 require 'pathname'
 require 'active_support/core_ext/string/strip'
 require 'active_support/core_ext/string/inflections'
+require 'multi_json'
 
 require 'miron/version'
 

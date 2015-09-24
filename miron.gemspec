@@ -21,6 +21,7 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'activesupport'
   spec.add_runtime_dependency 'claide'
+  spec.add_runtime_dependency 'multi_json'
 
   spec.add_development_dependency 'bundler', '~> 1.10'
   spec.add_development_dependency 'pry'
