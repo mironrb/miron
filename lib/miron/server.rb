@@ -20,7 +20,7 @@ module Miron
     end
 
     def start
-      require_relative File.expand_path(options['mironfile_path'])
+      # Set options defaults and run the handler
       options['environment'] = ENV['MIRON_ENV'] || 'development'
       options['default_host'] = options['environment'] == 'development' ? 'localhost' : '0.0.0.0'
       @handler.run(@mironfile, options)

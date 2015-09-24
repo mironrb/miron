@@ -8,34 +8,38 @@ require 'pry'
 ROOT = Pathname.new(File.expand_path('../../', __FILE__))
 Dir[ROOT.join('spec/support/**/*.rb')].each { |f| require f }
 
+ENV['TEST'] = 'true'
+
 def create_mironfile(dir)
-  (dir + 'Mironfile').open('w') { |f| f << '# hello' }
+  (dir + 'Mironfile.rb').open('w') do |f|
+    f << "class Hi
+  def self.call(_request)
+    Miron::Response.new(200, {}, 'hi')
+  end
+end
+    run Hi"
+  end
 end
 
 def get
-  Net::HTTP.start('127.0.0.1', 9290) do |http|
+  Net::HTTP.start('0.0.0.0', 9290) do |http|
     get = Net::HTTP::Get.new('/test', {})
     http.request(get) { |response| @status = response.code.to_i }
   end
 end
 
 def remove_mironfile(dir)
-  if (dir + 'Mironfile').exist?
-    FileUtils.rm(dir + 'Mironfile')
+  if (dir + 'Mironfile.rb').exist?
+    FileUtils.rm(dir + 'Mironfile.rb')
   else
     true
   end
 end
 
-class Hi
-  def self.call(_request)
-    Miron::Response.new(200, {}, 'hi')
-  end
-end
-
 def sample_app
-  app = Hi
-  server = Miron::Server.new(app, { 'server' => 'webrick', 'port' => '9290' })
+  create_mironfile(SpecHelper.temporary_directory)
+  @mironfile = Miron::Mironfile.from_dir(SpecHelper.temporary_directory)
+  server = Miron::Server.new(@mironfile, { 'server' => 'webrick', 'port' => '9290' })
   @thread = Thread.new { server.start }
   trap(:INT) { @thread.stop }
 end

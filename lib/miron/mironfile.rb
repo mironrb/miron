@@ -11,14 +11,16 @@ module Miron
     attr_reader :app, :middleware
 
     def self.from_dir(dir)
-      path = dir + 'Mironfile'
-      mironfile = Mironfile.new do
+      path = dir + 'Mironfile.rb'
+      mironfile = Mironfile.new(path) do
         eval(path.read, nil, path.to_s)
       end
       mironfile
     end
 
-    def initialize(&block)
+    def initialize(mironfile_path, &block)
+      require_relative File.expand_path(mironfile_path, __FILE__)
+      @middleware = []
       instance_eval(&block)
     end
 
@@ -32,7 +34,7 @@ module Miron
     #
     #   run Heartbeat
     def run(app)
-      @app = app.to_s.gsub!('Miron::Mironfile::', '')
+      @app = app.to_s.gsub!('Miron::Mironfile::', '').constantize
     end
 
     # Takes an argument that is an object that responds to #call and returns a {Miron::Response}.
@@ -52,8 +54,12 @@ module Miron
     #   use Middle
     #   run Heartbeat
     def use(middleware)
-      @middleware = []
-      @middleware << middleware.to_s.gsub!('Miron::Mironfile::', '')
+      middleware_string = middleware.to_s
+      if middleware_string.include?('Miron::Mironfile::')
+        @middleware << middleware_string.gsub!('Miron::Mironfile::', '').constantize
+      else
+        @middleware << middleware_string.constantize
+      end
     end
   end
 end

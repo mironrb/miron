@@ -9,7 +9,7 @@ module Miron
     # @return [Nil] If no Mironfile was found in the given dir
     #
     def self.mironfile_in_dir(dir)
-      mironfile = dir + 'Mironfile'
+      mironfile = dir + 'Mironfile.rb'
       if mironfile.exist?
         true
       else

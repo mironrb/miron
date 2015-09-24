@@ -9,7 +9,7 @@ describe Miron::Command::Init do
 
   it 'errors if a Mironfile already exists' do
     Dir.chdir(SpecHelper.temporary_directory) do
-      (Pathname.pwd + 'Mironfile').open('w') { |f| f << 'hello' }
+      (Pathname.pwd + 'Mironfile.rb').open('w') { |f| f << 'hello' }
       expect { run_command('init') }.to raise_error(CLAide::Help)
     end
   end
@@ -18,7 +18,7 @@ describe Miron::Command::Init do
     Dir.chdir(SpecHelper.temporary_directory) do
       run_command('init')
       expect(
-        Pathname.new(SpecHelper.temporary_directory + 'Mironfile').exist?
+        Pathname.new(SpecHelper.temporary_directory + 'Mironfile.rb').exist?
       ).to eq(true)
     end
   end

@@ -7,7 +7,7 @@ module Miron
       ]
 
       def initialize(argv)
-        @mironfile_path = Pathname.pwd + 'Mironfile'
+        @mironfile_path = Pathname.pwd + 'Mironfile.rb'
         super
       end
 

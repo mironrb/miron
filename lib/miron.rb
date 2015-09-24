@@ -15,6 +15,10 @@ module Miron
   autoload :Server,    'miron/server'
   autoload :Utils,     'miron/utils'
 
+  module Auth
+    autoload :Basic, 'miron/auth/basic'
+  end
+
   class Handler
     autoload :WEBrick, 'miron/handlers/webrick'
   end

@@ -5,7 +5,7 @@ module Miron
   class Handler
     class WEBrick < ::WEBrick::HTTPServlet::AbstractServlet
       def self.run(mironfile, options = {})
-        options[:BindAddress] = options['host']
+        options[:BindAddress] = options['default_host']
         options[:Port] = options['port']
         @server = ::WEBrick::HTTPServer.new(options)
         @server.mount('/', Miron::Handler::WEBrick, mironfile)
