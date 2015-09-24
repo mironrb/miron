@@ -4,6 +4,7 @@ require 'miron'
 require 'claide'
 require 'fileutils'
 require 'pry'
+require 'httparty'
 
 ROOT = Pathname.new(File.expand_path('../../', __FILE__))
 Dir[ROOT.join('spec/support/**/*.rb')].each { |f| require f }
@@ -22,10 +23,7 @@ end
 end
 
 def get
-  Net::HTTP.start('0.0.0.0', 9290) do |http|
-    get = Net::HTTP::Get.new('/test', {})
-    http.request(get) { |response| @status = response.code.to_i }
-  end
+  HTTParty.get('http://0.0.0.0:9290')
 end
 
 def remove_mironfile(dir)
