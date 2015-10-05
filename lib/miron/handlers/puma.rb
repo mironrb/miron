@@ -14,8 +14,7 @@ module Miron
       def call(env)
         # Get response
         miron_request = env
-        puma_response = nil
-        miron_response = Miron::Request.new(miron_request, puma_response, @mironfile).fetch_response
+        miron_response = Miron::Request.new(miron_request, @mironfile).fetch_response
         # Process response
         response_http_status = miron_response.http_status
         response_hash_values = miron_response.cookies.merge(miron_response.headers)
@@ -28,7 +27,7 @@ module Miron
           @mironfile = mironfile
           @options = options
           @serv = ::Puma::Server.new(Puma.new(@mironfile))
-          listen(@options['default_host'], @options['port'].to_i)
+          listen(@options['host'], @options['port'].to_i)
         end
 
         def stop
@@ -38,7 +37,7 @@ module Miron
         def listen(address, port)
           @serv.add_tcp_listener(address, port)
           @serv.run
-          puts "Miron backed Puma server has started on http://#{@options['default_host']}:#{@options['port']}"
+          puts "Miron backed Puma server has started on http://#{@options['host']}:#{@options['port']}"
           sleep
         end
       end

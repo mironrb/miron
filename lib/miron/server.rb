@@ -21,15 +21,15 @@ module Miron
 
     def start
       # Set options defaults and run the handler
-      options['environment'] = ENV['MIRON_ENV'] || 'development'
-      options['default_host'] = options['environment'] == 'development' ? 'localhost' : '0.0.0.0'
-      @handler.run(@mironfile, options)
+      @options['environment'] = ENV['MIRON_ENV'] || 'development'
+      @options['host'] = options['environment'] == 'development' ? 'localhost' : '0.0.0.0'
+      @handler.run(@mironfile, @options)
     end
 
     private
 
     def resolve_handler
-      @handler = Miron::Handler.get(options['handler'])
+      @handler = Miron::Handler.get(@options['handler'])
     end
   end
 end

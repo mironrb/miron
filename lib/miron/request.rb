@@ -7,15 +7,11 @@ module Miron
     # @param  [Class] miron_request
     #         Request object (can be an instance of `WEBrick::Request`)
     #
-    # @param  [Class] miron_response
-    #         Response object (can be an instance of `WEBrick::Response`)
-    #
     # @param  [Mironfile] mironfile
     #         Mironfile that has the app and middleware to perform a `.call` on
     #
-    def initialize(miron_request, miron_response, mironfile)
+    def initialize(miron_request, mironfile)
       @miron_request = miron_request
-      @miron_response = miron_response
       @mironfile = mironfile
     end
 
