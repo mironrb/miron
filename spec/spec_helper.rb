@@ -34,14 +34,6 @@ def remove_mironfile(dir)
   end
 end
 
-def sample_app
-  create_mironfile(SpecHelper.temporary_directory)
-  @mironfile = Miron::Mironfile.from_dir(SpecHelper.temporary_directory)
-  server = Miron::Server.new(@mironfile, { 'server' => 'webrick', 'port' => '9290' })
-  @thread = Thread.new { server.start }
-  trap(:INT) { @thread.stop }
-end
-
 module SpecHelper
   def self.temporary_directory
     ROOT + 'tmp'

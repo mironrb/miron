@@ -21,6 +21,7 @@ module Miron
   end
 
   class Handler
+    autoload :Puma,    'miron/handlers/puma'
     autoload :WEBrick, 'miron/handlers/webrick'
   end
 end

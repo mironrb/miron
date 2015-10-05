@@ -1,19 +1,15 @@
 require 'spec_helper'
-require 'webrick'
+require 'puma'
 
-describe Miron::Handler::WEBrick do
+describe Miron::Handler::Puma do
   describe 'In general' do
-    it 'inherits from WEBrick::HTTPServlet::AbstractServlet' do
-      expect(Miron::Handler::WEBrick.superclass).to eq(WEBrick::HTTPServlet::AbstractServlet)
-    end
-
     it 'responds to self.run' do
-      expect(Miron::Handler::WEBrick).to respond_to(:run)
+      expect(Miron::Handler::Puma).to respond_to(:run)
     end
   end
 
   describe 'Handler' do
-    sample_webrick_app
+    sample_puma_app
 
     it 'returns the correct HTTP status' do
       response = get
