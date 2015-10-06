@@ -38,9 +38,9 @@ module Miron
 
       def parse_input_body(webrick_request, miron_request)
         if webrick_request.body.to_s.nil? || webrick_request.body.to_s.empty?
-          miron_request['miron_input'] = ''
+          miron_request['HTTP_BODY'] = ''
         else
-          miron_request['miron_input'] = ::MultiJson.load(webrick_request.body.to_s)
+          miron_request['HTTP_BODY'] = ::MultiJson.load(webrick_request.body.to_s)
         end
       end
 
