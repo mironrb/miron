@@ -37,8 +37,14 @@ module Miron
         def listen(address, port)
           @serv.add_tcp_listener(address, port)
           @serv.run
-          puts "Miron backed Puma server has started on http://#{@options['host']}:#{@options['port']}"
-          sleep
+          puts "Puma #{::Puma::Const::PUMA_VERSION} starting..."
+          puts "* Environment: #{ENV['MIRON_ENV']}"
+          puts "* Listening on #{@options['host']}:#{@options['port']}"
+          begin
+            sleep
+          rescue Interrupt
+            puts '* Shutting down...'
+          end
         end
       end
     end

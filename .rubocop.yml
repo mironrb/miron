@@ -1,5 +1,6 @@
 AllCops:
   Exclude:
+    - rack_stuff/**/*
     - tmp/**/*
 
 inherit_from: .rubocop_todo.yml

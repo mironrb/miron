@@ -11,7 +11,12 @@ module Miron
         @server = ::WEBrick::HTTPServer.new(options)
         @server.mount('/', Miron::Handler::WEBrick, mironfile)
         yield @server if block_given?
-        @server.start
+
+        begin
+          @server.start
+        rescue Interrupt
+          puts '* Shutting down...'
+        end
       end
 
       def initialize(server, mironfile)
