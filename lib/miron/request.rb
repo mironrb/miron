@@ -2,7 +2,7 @@ module Miron
   # Miron::Request allows HTTP responses to be sent.
   #
   class Request
-    attr_reader :request, :miron_response, :app
+    attr_reader :request, :mironfile
 
     # @param  [Hash] request
     #         Request information
@@ -13,6 +13,7 @@ module Miron
     def initialize(request, mironfile)
       @request = request
       @mironfile = mironfile
+      @response = Miron::Response.new
       fix_hash_keys
     end
 
@@ -21,13 +22,13 @@ module Miron
     def fetch_response
       miron_response = nil
       @mironfile.middleware.each do |middleware|
-        middleware_response = middleware.call(@request)
+        middleware_response = middleware.call(@request, @response)
         miron_response = middleware_response if middleware_response.is_a?(Miron::Response)
       end
 
       return miron_response unless miron_response.nil?
 
-      app_response = @mironfile.app.call(@request)
+      app_response = @mironfile.app.call(@request, @response)
       miron_response = app_response if app_response.is_a?(Miron::Response)
       miron_response
     end

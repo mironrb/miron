@@ -2,7 +2,7 @@ module Miron
   # Miron::Reponse allows HTTP responses to be sent.
   #
   class Response
-    attr_reader :http_status, :headers, :body, :cookies
+    attr_accessor :http_status, :headers, :body, :cookies
 
     # @param  [Integer] http_status
     #         the HTTP status code to return
@@ -15,11 +15,11 @@ module Miron
     #
     # @return [Response] returns the newly created {Miron::Response}
     #
-    def initialize(http_status, headers, body, cookies = {})
-      @http_status = http_status
-      @headers = headers
-      @body = body
-      @cookies = cookies
+    def initialize
+      @http_status = 200
+      @headers = {}
+      @body = ''
+      @cookies = {}
     end
   end
 end

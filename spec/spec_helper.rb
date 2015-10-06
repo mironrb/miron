@@ -14,11 +14,16 @@ ENV['TEST'] = 'true'
 def create_mironfile(dir)
   (dir + 'Mironfile.rb').open('w') do |f|
     f << "class Hi
-  def self.call(_request)
-    Miron::Response.new(200, {}, 'hi')
+  def self.call(request, response)
+    response.http_status = 200
+    response.headers = { 'HELLO' => 'HELLO'}
+    response.body = 'hi'
+    response.cookies = { 'HELLO' => 'HELLO' }
+    return response
   end
 end
-    run Hi"
+
+run Hi"
   end
 end
 
