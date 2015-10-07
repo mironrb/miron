@@ -1,19 +1,19 @@
 require 'spec_helper'
-require 'webrick'
+require 'unicorn'
 
-describe Miron::Handler::WEBrick do
+describe Miron::Handler::Unicorn do
   describe 'In general' do
     it 'inherits from WEBrick::HTTPServlet::AbstractServlet' do
-      expect(Miron::Handler::WEBrick.superclass).to eq(WEBrick::HTTPServlet::AbstractServlet)
+      expect(Miron::Handler::Unicorn.superclass).to eq(Unicorn::HttpServer)
     end
 
     it 'responds to self.run' do
-      expect(Miron::Handler::WEBrick).to respond_to(:run)
+      expect(Miron::Handler::Unicorn).to respond_to(:run)
     end
   end
 
   describe 'Handler' do
-    sample_webrick_app
+    sample_unicorn_app
 
     it 'returns the correct HTTP body' do
       response = get

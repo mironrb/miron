@@ -22,6 +22,7 @@ module Miron
 
   class Handler
     autoload :Puma,    'miron/handlers/puma'
+    autoload :Unicorn, 'miron/handlers/unicorn'
     autoload :WEBrick, 'miron/handlers/webrick'
   end
 end

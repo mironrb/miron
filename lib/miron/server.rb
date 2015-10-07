@@ -22,7 +22,7 @@ module Miron
     def start
       # Set options defaults and run the handler
       @options['environment'] = ENV['MIRON_ENV'] || 'development'
-      @options['host'] = options['environment'] == 'development' ? 'localhost' : '0.0.0.0'
+      @options['host'] = '0.0.0.0'
       @handler.run(@mironfile, @options)
     end
 
