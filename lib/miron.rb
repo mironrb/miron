@@ -1,6 +1,4 @@
 require 'pathname'
-require 'rubygems'
-require 'active_support'
 require 'active_support/core_ext/string/strip'
 require 'active_support/core_ext/string/inflections'
 require 'multi_json'
