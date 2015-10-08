@@ -6,6 +6,14 @@ def sample_puma_app
   trap(:INT) { @thread.stop }
 end
 
+def sample_thin_app
+  create_mironfile(SpecHelper.temporary_directory)
+  @mironfile = Miron::Mironfile.from_dir(SpecHelper.temporary_directory)
+  thin_server = Miron::Server.new(@mironfile, { 'handler' => 'thin', 'port' => '9290' })
+  @thread = Thread.new { thin_server.start }
+  trap(:INT) { @thread.stop }
+end
+
 def sample_unicorn_app
   create_mironfile(SpecHelper.temporary_directory)
   @mironfile = Miron::Mironfile.from_dir(SpecHelper.temporary_directory)

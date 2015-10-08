@@ -1,4 +1,6 @@
 require 'pathname'
+require 'rubygems'
+require 'active_support'
 require 'active_support/core_ext/string/strip'
 require 'active_support/core_ext/string/inflections'
 require 'multi_json'
@@ -22,6 +24,7 @@ module Miron
 
   class Handler
     autoload :Puma,    'miron/handlers/puma'
+    autoload :Thin,    'miron/handlers/thin'
     autoload :Unicorn, 'miron/handlers/unicorn'
     autoload :WEBrick, 'miron/handlers/webrick'
   end
