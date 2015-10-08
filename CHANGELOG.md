@@ -3,6 +3,7 @@
 * Add `use` to Mironfile.rb to allow adding of middleware - [@maclover7](https://github.com/maclover7).
 * Add Puma HTTP handler - [@maclover7](https://github.com/maclover7).
 * Add Unicorn HTTP handler - [@maclover7](https://github.com/maclover7).
+* Add Thin HTTP handler - [@maclover7](https://github.com/maclover7).
 
 ### 0.0.1 (9/21/2015)
 * Initial public release - [@maclover7](https://github.com/maclover7).
