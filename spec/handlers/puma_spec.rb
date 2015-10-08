@@ -16,7 +16,7 @@ describe Miron::Handler::Puma do
       expect(response.body).to eq('hi')
     end
 
-    xit 'returns the correct HTTP cookies' do
+    it 'returns the correct HTTP cookies' do
       response = get
       expect(response.headers['set-cookie']).to eq('HELLO=HELLO')
     end

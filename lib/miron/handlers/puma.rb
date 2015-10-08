@@ -17,9 +17,12 @@ module Miron
         miron_response = Miron::Request.new(miron_request, @mironfile).fetch_response
         # Process response
         response_http_status = miron_response.http_status
-        response_hash_values = miron_response.cookies.merge(miron_response.headers)
+        # Add cookies to headers
+        miron_response.cookies.each do |k, v|
+          miron_response.headers['Set-Cookie'] = "#{k}=#{v}"
+        end
         response_body = [miron_response.body]
-        [response_http_status, response_hash_values, response_body]
+        [response_http_status, miron_response.headers, response_body]
       end
 
       class Proxy
