@@ -1,3 +1,16 @@
+def sample_basic_auth_app(auth:)
+  create_mironfile_basic_auth(SpecHelper.temporary_directory)
+  @mironfile = Miron::Mironfile.from_file(SpecHelper.temporary_directory + 'Mironfile2.rb')
+  if auth == true
+    port = '9290'
+  else
+    port = '9291'
+  end
+  webrick_server = Miron::Server.new(@mironfile, { 'handler' => 'webrick', 'port' => port })
+  @thread = Thread.new { webrick_server.start }
+  trap(:INT) { @thread.stop }
+end
+
 def sample_puma_app
   create_mironfile(SpecHelper.temporary_directory)
   @mironfile = Miron::Mironfile.from_dir(SpecHelper.temporary_directory)
