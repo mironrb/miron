@@ -23,7 +23,8 @@ module Miron
     autoload :WEBrick, 'miron/handlers/webrick'
   end
 
-  class Middleware
-    autoload :BasicAuth, 'miron/midleware/basic_auth'
+  module Middleware
+    autoload :BasicAuth, 'miron/middleware/basic_auth'
+    autoload :Static,    'miron/middleware/static'
   end
 end

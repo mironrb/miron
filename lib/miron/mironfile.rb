@@ -49,7 +49,7 @@ module Miron
     #
     #   run Heartbeat
     def run(app, *args)
-      app_constant = app.to_s.gsub!('Miron::Mironfile::', '').constantize
+      app_constant = app.to_s.gsub('Miron::Mironfile::', '').constantize
       if args.empty?
         @app = app_constant
       else
