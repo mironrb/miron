@@ -14,24 +14,21 @@ describe Miron::Handler::Thin do
 
   describe 'Handler' do
     sample_thin_app
+    response = get
 
     it 'returns the correct HTTP body' do
-      response = get
       expect(response.body).to eq('hi')
     end
 
     it 'returns the correct HTTP cookies' do
-      response = get
       expect(response.headers['set-cookie']).to eq('HELLO=HELLO')
     end
 
     it 'returns the correct HTTP headers' do
-      response = get
       expect(response.headers['hello']).to eq('HELLO')
     end
 
     it 'returns the correct HTTP status' do
-      response = get
       expect(response.code.to_i).to eq(200)
     end
   end
