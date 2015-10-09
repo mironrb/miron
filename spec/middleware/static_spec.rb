@@ -52,7 +52,10 @@ describe Miron::Middleware::Static do
       response = get_static('valid-file')
       expect(response.headers['Content-Length']).to eq('3')
       expect(response.headers['Content-Type']).to eq('text/plain')
-      expect(response.headers['Last-Modified']).to eq('Fri, 09 Oct 2015 22:15:20 GMT')
+      time = Time.parse(response.headers['Last-Modified'])
+      expect(time.month).to eq(10)
+      expect(time.day).to eq(9)
+      expect(time.year).to eq(2015)
     end
 
     it 'returns the correct HTTP status' do
