@@ -18,6 +18,21 @@ module Miron
       mironfile
     end
 
+    # Returns the contents of the Mironfile in the given path.
+    #
+    # @param  [Pathname] path
+    #         The path for the Mironfile.
+    #
+    # @return [Miron::Mironfile] Returns newly create {Miron::Mironfile}
+    # @return [Nil] If no Mironfile was found in the given dir
+    #
+    def self.from_file(path)
+      mironfile = Mironfile.new(path) do
+        eval(path.read, nil, path.to_s)
+      end
+      mironfile
+    end
+
     def initialize(mironfile_path, &block)
       require_relative File.expand_path(mironfile_path, __FILE__)
       @middleware = []
@@ -33,8 +48,13 @@ module Miron
     #   end
     #
     #   run Heartbeat
-    def run(app)
-      @app = app.to_s.gsub!('Miron::Mironfile::', '').constantize
+    def run(app, *args)
+      app_constant = app.to_s.gsub!('Miron::Mironfile::', '').constantize
+      if args.empty?
+        @app = app_constant
+      else
+        @app = app_constant.new(args)
+      end
     end
 
     # Takes an argument that is an object that responds to #call and returns a {Miron::Response}.
@@ -53,19 +73,25 @@ module Miron
     #
     #   use Middle
     #   run Heartbeat
-    def use(middleware)
+    def use(middleware, *args)
       middleware_string = middleware.to_s
       if middleware_string.include?('Miron::Mironfile::')
-        @middleware << middleware_string.gsub!('Miron::Mironfile::', '').constantize
+        middleware_constant = middleware_string.gsub!('Miron::Mironfile::', '').constantize
       else
-        @middleware << middleware_string.constantize
+        middleware_constant = middleware_string.constantize
+      end
+
+      if args.empty?
+        @middleware << middleware_constant
+      else
+        @middleware << middleware_constant.new(args)
       end
     end
   end
 end
 
-def run(_)
+def run(_app, *_args)
 end
 
-def use(_)
+def use(_middleware, *_args)
 end
