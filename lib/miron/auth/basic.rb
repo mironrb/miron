@@ -1,28 +1,37 @@
 module Miron
   module Auth
     class Basic
-      attr_reader :request
+      attr_reader :request, :response
 
-      def self.call(request)
+      def initialize(args)
+        @username = args[0]
+        @password = args[1]
+      end
+
+      def call(request, response)
         @request = request
+        @response = response
         return unauthorized if authorization_key.nil?
         check_auth
       end
 
-      def self.auth_cleared
+      def auth_cleared
         true
       end
 
-      def self.authorization_key
+      def authorization_key
         authorization_keys = ['HTTP_AUTHORIZATION', 'HTTP_X-HTTP_AUTHORIZATION', 'HTTP_X_HTTP_AUTHORIZATION']
         @authorization_key ||= authorization_keys.detect { |key| @request.key?(key) } || nil
       end
 
-      def self.bad_request
-        Miron::Response.new(400, { 'Content-Type' => 'text/plain', 'Content-Length' => '0' }, '')
+      def bad_request
+        @response.http_status = 400
+        @response.headers = { 'Content-Type' => 'text/plain', 'Content-Length' => '0' }
+        @response.body = ''
+        @response
       end
 
-      def self.check_auth
+      def check_auth
         # Get Auth Scheme and encoded username/password
         auth_key = @request[authorization_key].split(' ', 2)
         scheme = auth_key.first && auth_key.first.downcase
@@ -30,20 +39,21 @@ module Miron
 
         # Validate credentials
         decrypted_auth_key = auth_key.last.unpack('m*').first.split(/:/, 2)
-        if [ENV['MIRON_BAUTH_USERNAME'], ENV['MIRON_BAUTH_PWD']] == decrypted_auth_key
+        if [@username, @password] == decrypted_auth_key
           return auth_cleared
         else
           return unauthorized
         end
       end
 
-      def self.unauthorized
-        Miron::Response.new(401,
-                            { 'Content-Type' => 'text/plain',
+      def unauthorized
+        @response.http_status = 401
+        @response.headers = { 'Content-Type' => 'text/plain',
                               'Content-Length' => '0',
                               'WWW-Authenticate' => 'Basic realm="Login"'
-                            },
-                            '')
+                            }
+        @response.body = ''
+        @response
       end
     end
   end
