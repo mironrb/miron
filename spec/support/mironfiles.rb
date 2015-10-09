@@ -67,3 +67,10 @@ use Miron::Middleware::BasicAuth, 'hello', 'hello'
 run Hi"
   end
 end
+
+def create_mironfile_static(dir)
+  FileUtils.rm(dir + 'Mironfile3.rb') if File.exist?(dir + 'Mironfile3.rb')
+  (dir + 'Mironfile3.rb').open('w') do |f|
+    f << "run Miron::Middleware::Static, 'spec/support/hello'"
+  end
+end

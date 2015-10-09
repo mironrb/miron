@@ -27,6 +27,16 @@ def get_basic_auth(auth:)
   HTTParty.get("http://0.0.0.0:#{port}", basic_auth: credentials)
 end
 
+def get_static(test)
+  if test == 'invalid-http'
+    HTTParty.post('http://0.0.0.0:9294', { lala: 'lala' })
+  elsif test == 'invalid-file'
+    HTTParty.get('http://0.0.0.0:9294/lalalalal.txt')
+  elsif test == 'valid-file'
+    HTTParty.get('http://0.0.0.0:9294/hi.txt')
+  end
+end
+
 def remove_mironfile(dir)
   if (dir + 'Mironfile.rb').exist?
     FileUtils.rm(dir + 'Mironfile.rb')

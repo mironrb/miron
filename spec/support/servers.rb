@@ -19,6 +19,14 @@ def sample_puma_app
   trap(:INT) { @thread.stop }
 end
 
+def sample_static_app
+  create_mironfile_static(SpecHelper.temporary_directory)
+  @mironfile = Miron::Mironfile.from_file(SpecHelper.temporary_directory + 'Mironfile3.rb')
+  webrick_server = Miron::Server.new(@mironfile, { 'handler' => 'webrick', 'port' => '9294' })
+  @thread = Thread.new { webrick_server.start }
+  trap(:INT) { @thread.stop }
+end
+
 def sample_thin_app
   create_mironfile(SpecHelper.temporary_directory)
   @mironfile = Miron::Mironfile.from_dir(SpecHelper.temporary_directory)
