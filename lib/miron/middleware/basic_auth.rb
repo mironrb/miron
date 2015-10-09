@@ -1,6 +1,6 @@
 module Miron
-  module Auth
-    class Basic
+  module Middleware
+    class BasicAuth
       attr_reader :request, :response
 
       def initialize(args)

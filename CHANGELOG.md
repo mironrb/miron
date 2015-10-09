@@ -1,6 +1,7 @@
 ### Next Release
 * Pass paramters to middleware and app - [@maclover7](https://github.com/maclover7).
 * Redo Miron::Auth::Basic to accept params via Mironfile. Closes #15. - [@maclover7](https://github.com/maclover7).
+* Put all Miron middleware under the `Miron::Middleware` module. - [@maclover7](https://github.com/maclover7)
 
 ### 0.0.2 - (10/8/2015)
 * Add `Miron::Auth::Basic` middleware to allow HTTP Basic authentication - [@maclover7](https://github.com/maclover7).

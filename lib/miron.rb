@@ -16,14 +16,14 @@ module Miron
   autoload :Server,    'miron/server'
   autoload :Utils,     'miron/utils'
 
-  module Auth
-    autoload :Basic, 'miron/auth/basic'
-  end
-
   class Handler
     autoload :Puma,    'miron/handlers/puma'
     autoload :Thin,    'miron/handlers/thin'
     autoload :Unicorn, 'miron/handlers/unicorn'
     autoload :WEBrick, 'miron/handlers/webrick'
+  end
+
+  class Middleware
+    autoload :BasicAuth, 'miron/midleware/basic_auth'
   end
 end
