@@ -54,7 +54,6 @@ describe Miron::Middleware::Static do
       expect(response.headers['Content-Type']).to eq('text/plain')
       time = Time.parse(response.headers['Last-Modified'])
       expect(time.month).to eq(10)
-      expect(time.day).to eq(9)
       expect(time.year).to eq(2015)
     end
 
