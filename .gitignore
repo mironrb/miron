@@ -7,4 +7,5 @@
 /pkg/
 /spec/reports/
 /tmp/
+!/tmp/.gitkeep
 /rack_stuff
