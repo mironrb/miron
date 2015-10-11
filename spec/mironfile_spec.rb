@@ -31,14 +31,12 @@ describe Miron::Mironfile do
 
       it 'returns an instance of app' do
         mironfile = Miron::Mironfile.from_file(SpecHelper.temporary_directory + 'Mironfile1.rb')
-        expect(mironfile.app).to be_an_instance_of(HiThree)
-        expect(mironfile.app.class).to eq(HiThree)
+        expect(mironfile.app.class.to_s).to end_with 'HiThree'
       end
 
       it 'returns an instance of middleware' do
         mironfile = Miron::Mironfile.from_file(SpecHelper.temporary_directory + 'Mironfile1.rb')
-        expect(mironfile.middleware.first).to be_an_instance_of(HiFour)
-        expect(mironfile.middleware.first.class).to eq(HiFour)
+        expect(mironfile.middleware.first.class.to_s).to end_with 'HiFour'
       end
     end
 
@@ -49,14 +47,12 @@ describe Miron::Mironfile do
 
       it 'returns a class, not an instance of app' do
         mironfile = Miron::Mironfile.from_file(SpecHelper.temporary_directory + 'Mironfile.rb')
-        expect(mironfile.app).to_not be_an_instance_of(Hi)
-        expect(mironfile.app).to eq(Hi)
+        expect(mironfile.app.to_s).to end_with 'Hi'
       end
 
       it 'returns an class, not an instance of middleware' do
         mironfile = Miron::Mironfile.from_file(SpecHelper.temporary_directory + 'Mironfile.rb')
-        expect(mironfile.middleware.first).to_not be_an_instance_of(HiTwo)
-        expect(mironfile.middleware.first).to eq(HiTwo)
+        expect(mironfile.middleware.first.to_s).to end_with 'HiTwo'
       end
     end
   end

@@ -12,9 +12,8 @@ module Miron
 
     def self.from_dir(dir)
       path = dir + 'Mironfile.rb'
-      mironfile = Mironfile.new(path) do
-        eval(path.read, nil, path.to_s)
-      end
+      mironfile = Mironfile.new(path)
+      mironfile.evaluate
       mironfile
     end
 
@@ -27,16 +26,14 @@ module Miron
     # @return [Nil] If no Mironfile was found in the given dir
     #
     def self.from_file(path)
-      mironfile = Mironfile.new(path) do
-        eval(path.read, nil, path.to_s)
-      end
+      mironfile = Mironfile.new(path)
+      mironfile.evaluate
       mironfile
     end
 
-    def initialize(mironfile_path, &block)
-      require_relative File.expand_path(mironfile_path, __FILE__)
+    def initialize(mironfile_path)
+      @mironfile_path = mironfile_path
       @middleware = []
-      instance_eval(&block)
     end
 
     # Takes an argument that is an object that responds to #call and returns a {Miron::Response}.
@@ -55,7 +52,7 @@ module Miron
     #   this too! Important: if you are initializing your app, you MUST change th call method to be
     #   on the instance of the class, not as a class method. See the below example for more information.
     #
-    #   class Heatbeat
+    #   class Heartbeat
     #     def initialize(hi)
     #       @hi = hi
     #     end
@@ -69,8 +66,7 @@ module Miron
     #
     #   run Heartbeat, 'hi'
     #
-    def run(app, *args)
-      app_constant = app.to_s.gsub('Miron::Mironfile::', '').constantize
+    def run(app_constant, *args)
       if args.empty?
         @app = app_constant
       else
@@ -111,7 +107,7 @@ module Miron
     #     end
     #   end
     #
-    #   class Heatbeat
+    #   class Heartbeat
     #     def self.call(request, response)
     #       response.http_status = 200
     #       response.headers = { "Content-Type" => "text/plain" }
@@ -122,25 +118,16 @@ module Miron
     #   use Middle, 'hi'
     #   run Heartbeat
     #
-    def use(middleware, *args)
-      middleware_string = middleware.to_s
-      if middleware_string.include?('Miron::Mironfile::')
-        middleware_constant = middleware_string.gsub!('Miron::Mironfile::', '').constantize
-      else
-        middleware_constant = middleware_string.constantize
-      end
-
+    def use(middleware_constant, *args)
       if args.empty?
         @middleware << middleware_constant
       else
         @middleware << middleware_constant.new(args)
       end
     end
+
+    def evaluate
+      instance_eval(@mironfile_path.read)
+    end
   end
-end
-
-def run(_app, *_args)
-end
-
-def use(_middleware, *_args)
 end
