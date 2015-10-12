@@ -126,6 +126,7 @@ module Miron
       end
     end
 
+    # Evaluates the Mironfile provided.
     def evaluate
       instance_eval(@mironfile_path.read)
     end
