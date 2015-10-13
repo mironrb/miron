@@ -4,9 +4,12 @@
 
 A redesigned Ruby web interface.
 
+See the examples directory for some examples of the Miron API in use.
+
 ## Contributing
 
-See [CONTRIBUTING](CONTRIBUTING.md).
+See [CONTRIBUTING](CONTRIBUTING.md), and check out the issue tracker for
+current project goals.
 
 ## Upgrading
 
