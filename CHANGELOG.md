@@ -1,3 +1,6 @@
+### Next Release
+* Your contribution here.
+
 ### 0.0.3 - (10/14/2015)
 * Pass paramters to middleware and app - [@maclover7](https://github.com/maclover7).
 * Redo Miron::Auth::Basic to accept params via Mironfile. Closes #15. - [@maclover7](https://github.com/maclover7).
