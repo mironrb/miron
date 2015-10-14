@@ -12,6 +12,7 @@ module Miron
 
     def self.from_dir(dir)
       path = dir + 'Mironfile.rb'
+      return nil unless path && File.exist?(path)
       mironfile = Mironfile.new(path)
       mironfile.evaluate
       mironfile
@@ -26,6 +27,7 @@ module Miron
     # @return [Nil] If no Mironfile was found in the given dir
     #
     def self.from_file(path)
+      return nil unless path && File.exist?(path)
       mironfile = Mironfile.new(path)
       mironfile.evaluate
       mironfile
