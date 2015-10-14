@@ -5,7 +5,7 @@
 - Update `lib/miron/version.rb` file accordingly.
 - Make sure the `CHANGELOG.md` has all of the correct shipped items
   inside of it.
-- Commit once you have updated the `version.rb` file --> `Releasing
+- Commit once you have updated the `version.rb` file --> `Release
   v0.0.3`
 - Tag the release: git tag -m 'vVERSION' vVERSION
 - Push changes: `git push --tags`
