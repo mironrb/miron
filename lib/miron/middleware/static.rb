@@ -21,7 +21,7 @@ module Miron
 
         # Check to make sure it's a valid HTTP method
         if check_request_method == true
-          @request_file_path = Pathname.new(@filesystem_root + request['PATH'])
+          @request_file_path = Pathname.new(@filesystem_root + request.hash['PATH'])
           # Make sure file is available
           if check_for_file == true
             # Calculate important things about the file
@@ -48,7 +48,7 @@ module Miron
       end
 
       def check_request_method
-        ALLOWED_VERBS.first.include?(@request['HTTP_METHOD'])
+        ALLOWED_VERBS.first.include?(@request.hash['HTTP_METHOD'])
       end
 
       def return_404

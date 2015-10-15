@@ -13,6 +13,7 @@ module Miron
   autoload :Mironfile, 'miron/mironfile'
   autoload :Response,  'miron/response'
   autoload :Request,   'miron/request'
+  autoload :RequestFetcher, 'miron/request_fetcher'
   autoload :Server,    'miron/server'
   autoload :Utils,     'miron/utils'
 

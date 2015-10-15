@@ -15,7 +15,7 @@ module Miron
       def process_client(socket)
         # Get response
         miron_request = @request.read(socket)
-        miron_response = Miron::Request.new(miron_request, @mironfile).fetch_response
+        miron_response = Miron::RequestFetcher.new(miron_request, @mironfile).fetch_response
         # Process response
         response_http_status = miron_response.http_status
         # Add cookies to headers

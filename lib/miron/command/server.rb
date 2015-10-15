@@ -16,7 +16,9 @@ module Miron
         @options = {}
         @options['port'] = argv.option('port') || 9290
         @options['handler'] = argv.option('handler')
-        @options['mironfile'] = argv.option('mironfile')
+        if argv.options.key?('mironfile')
+          @options['mironfile'] = Pathname.pwd + argv.option('mironfile')
+        end
         @mironfile = fetch_mironfile
         super
       end

@@ -1,36 +1,16 @@
 module Miron
-  # Miron::Request allows HTTP responses to be sent.
+  # Miron::Request converts an env hash of HTTP variables to a proper {Miron::Request} object.
   #
   class Request
-    attr_reader :request, :mironfile
+    attr_reader :request_hash
+    attr_accessor :hash
 
-    # @param  [Hash] request
+    # @param  [Hash] request_hash
     #         Request information
     #
-    # @param  [Mironfile] mironfile
-    #         Mironfile that has the app and middleware to perform a `.call` on
-    #
-    def initialize(request, mironfile)
-      @request = request
-      @mironfile = mironfile
-      @response = Miron::Response.new
+    def initialize(request_hash)
+      @hash = request_hash
       fix_hash_keys
-    end
-
-    # @return [Response] returns the newly created {Miron::Response}
-    #
-    def fetch_response
-      miron_response = nil
-      @mironfile.middleware.each do |middleware|
-        middleware_response = middleware.call(@request, @response)
-        miron_response = middleware_response if middleware_response.is_a?(Miron::Response)
-      end
-
-      return miron_response unless miron_response.nil?
-
-      app_response = @mironfile.app.call(@request, @response)
-      miron_response = app_response if app_response.is_a?(Miron::Response)
-      miron_response
     end
 
     private
@@ -38,14 +18,14 @@ module Miron
     # Make request hash keys easier to understand.
     def fix_hash_keys
       # Convert PATH_INFO to PATH
-      return unless @request['PATH_INFO']
-      @request['PATH'] = @request['PATH_INFO']
-      @request.delete('PATH_INFO')
+      return unless @hash['PATH_INFO']
+      @hash['PATH'] = @hash['PATH_INFO']
+      @hash.delete('PATH_INFO')
 
       # Convert REQUEST_METHOD to HTTP_METHOD
-      return unless @request['REQUEST_METHOD']
-      @request['HTTP_METHOD'] = @request['REQUEST_METHOD']
-      @request.delete('REQUEST_METHOD')
+      return unless @hash['REQUEST_METHOD']
+      @hash['HTTP_METHOD'] = @hash['REQUEST_METHOD']
+      @hash.delete('REQUEST_METHOD')
     end
   end
 end

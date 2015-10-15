@@ -1,5 +1,7 @@
 ### Next Release
 * Your contribution here.
+* Refactor request processing to use `Miron::RequestFetcher`, and not
+  `Miron::Request` directly - [@maclover7](https://github.com/maclover7).
 
 ### 0.0.3 - (10/14/2015)
 * Pass paramters to middleware and app - [@maclover7](https://github.com/maclover7).

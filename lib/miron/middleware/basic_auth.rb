@@ -21,7 +21,7 @@ module Miron
 
       def authorization_key
         authorization_keys = ['HTTP_AUTHORIZATION', 'HTTP_X-HTTP_AUTHORIZATION', 'HTTP_X_HTTP_AUTHORIZATION']
-        @authorization_key ||= authorization_keys.detect { |key| @request.key?(key) } || nil
+        @authorization_key ||= authorization_keys.detect { |key| @request.hash.key?(key) } || nil
       end
 
       def bad_request
@@ -33,7 +33,7 @@ module Miron
 
       def check_auth
         # Get Auth Scheme and encoded username/password
-        auth_key = @request[authorization_key].split(' ', 2)
+        auth_key = @request.hash[authorization_key].split(' ', 2)
         scheme = auth_key.first && auth_key.first.downcase
         return bad_request if scheme != 'basic'
 

@@ -27,7 +27,7 @@ module Miron
       def service(webrick_request, webrick_response)
         miron_request = webrick_request.meta_vars
         parse_input_body(webrick_request, miron_request)
-        miron_response = Miron::Request.new(miron_request, @mironfile).fetch_response
+        miron_response = Miron::RequestFetcher.new(miron_request, @mironfile).fetch_response
 
         webrick_response.status = miron_response.http_status
         webrick_response.body << miron_response.body
