@@ -18,4 +18,18 @@ describe Miron::Request do
       expect(request.hash).to_not eq({ 'PATH_INFO' => '/', 'REQUEST_METHOD' => 'GET' })
     end
   end
+
+  describe '#websocket?' do
+    it 'returns true correctly' do
+      request_hash = { 'HTTP_SEC_WEBSOCKET_KEY' => 'LALALA' }
+      request = Miron::Request.new(request_hash)
+      expect(request.websocket?).to eq(true)
+    end
+
+    it 'returns false correctly' do
+      request_hash = { 'LALALA' => 'LALALA' }
+      request = Miron::Request.new(request_hash)
+      expect(request.websocket?).to eq(false)
+    end
+  end
 end

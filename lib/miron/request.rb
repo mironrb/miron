@@ -13,6 +13,11 @@ module Miron
       fix_hash_keys
     end
 
+    def websocket?
+      @hash.key?('HTTP_SEC_WEBSOCKET_KEY')
+      # Also known as "Sec-WebSocket-Key"
+    end
+
     private
 
     # Make request hash keys easier to understand.
