@@ -4,7 +4,9 @@
 
 A redesigned Ruby web interface.
 
-See the examples directory for some examples of the Miron API in use.
+* All web applications or servers using Miron must comply to the [Miron
+  Specification](SPECIFICATION.md)
+* See the examples directory for some examples of the Miron API in use.
 
 ## Contributing
 

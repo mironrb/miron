@@ -4,6 +4,8 @@
   `Miron::Request` directly - [@maclover7](https://github.com/maclover7).
 * Add `Miron::Request#websocket?` to check and see if request is via
   websocket, by checking if the 'Sec-WebSocket-Key' HTTP header exists - [@maclover7](https://github.com/maclover7).
+* Add the Miron Specification to standardize interactions between Miron
+  and web applications and servers - [@maclover7](https://github.com/maclover7).
 
 ### 0.0.3 - (10/14/2015)
 * Pass paramters to middleware and app - [@maclover7](https://github.com/maclover7).
