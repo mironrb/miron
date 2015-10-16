@@ -1,7 +1,13 @@
+require 'digest/sha1'
+require 'base64'
+require 'socket'
+
 module Miron
   # Miron::Request converts an env hash of HTTP variables to a proper {Miron::Request} object.
   #
   class Request
+    WS_MAGIC_STRING = '258EAFA5-E914-47DA-95CA-C5AB0DC85B11'
+
     attr_reader :request_hash
     attr_accessor :hash
 
@@ -13,9 +19,30 @@ module Miron
       fix_hash_keys
     end
 
+    def setup_websocket
+      if @hash['SERVER_SOFTWARE'].include?('WEBrick')
+        fail NotImplementedError, 'WEBrick does not support websockets.'
+      end
+
+      # socket-ify
+      socket = @hash['miron.socket'].call
+      websocket_handshake(socket)
+      Miron::WebsocketConnection.new(socket)
+    end
+
+    # Checks to see if 'Sec-Websocket-Key' HTTP header is in the request header hash.
     def websocket?
-      @hash.key?('HTTP_SEC_WEBSOCKET_KEY')
-      # Also known as "Sec-WebSocket-Key"
+      @hash['HTTP_METHOD'] == 'GET' && @hash.key?('HTTP_SEC_WEBSOCKET_KEY')
+    end
+
+    def websocket_handshake(socket)
+      digest = Digest::SHA1.digest(@hash['HTTP_SEC_WEBSOCKET_KEY'] + WS_MAGIC_STRING)
+      accept_code = Base64.encode64(digest)
+      socket.write("HTTP/1.1 101 Switching Protocols\r\n" +
+                "Upgrade: websocket\r\n" +
+                "Connection: Upgrade\r\n" +
+                "Sec-WebSocket-Accept: #{accept_code}\r\n")
+      socket.flush
     end
 
     private

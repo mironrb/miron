@@ -42,11 +42,11 @@ directly.
   running. This serves as a reference as to what version of the
 specification you are running, but also what features from Miron can be
 accessed through your web server.
-- `miron.socket`: This should be a `TCPSocket` that can be used by the
-  web application to process websocket requests or similar. If any
-special methods need to be called for your web server to transfer the
-request to be socket-ified (isn't it fun to make up words?), then make
-sure you document this well in your project.
+- `miron.socket`: This should be a `TCPSocket` or similar that can be used by the
+  web application to process websocket requests or similar. A web server
+should take care to make sure that `miron.socket` will be activated, and
+thus the request socket-ified (isn't it fun to make up words?), when
+`.call` is done on the `miron.socket`.
 
 # For Web Applications
 
