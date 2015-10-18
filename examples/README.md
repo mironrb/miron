@@ -4,3 +4,5 @@
   no middleware.
 - See [middleware.rb](middleware.rb) for an example of an application
   with middleware.
+- See [websockets.rb](websockets.rb) for an example of an application
+  with websockets.
