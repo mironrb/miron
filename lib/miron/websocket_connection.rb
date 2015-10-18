@@ -5,6 +5,8 @@ module Miron
     PONG_OPCODE = 0x10
     TEXT_OPCODE = 0x01
 
+    attr_accessor :conn_close_handlers, :conn_message_handlers,
+                  :conn_open_handlers, :conn_ping_handlers
     attr_reader :socket
 
     def initialize(socket)
