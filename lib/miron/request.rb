@@ -27,7 +27,9 @@ module Miron
       # socket-ify
       socket = @hash['miron.socket'].call
       websocket_handshake(socket)
-      Miron::WebsocketConnection.new(socket)
+      @websocket_connection = Miron::WebsocketConnection.new(socket)
+    rescue Errno::EPIPE => e
+      @websocket_connection.dispatch_event("\x88", '')
     end
 
     # Checks to see if 'Sec-Websocket-Key' HTTP header is in the request header hash.
