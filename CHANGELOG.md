@@ -1,3 +1,6 @@
+### Next Release
+* Your contribution here.
+
 ### 0.0.4 - (10/17/2015)
 * Refactor request processing to use `Miron::RequestFetcher`, and not
   `Miron::Request` directly - [@maclover7](https://github.com/maclover7).
