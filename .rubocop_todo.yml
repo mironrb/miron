@@ -1,5 +1,9 @@
 Lint/Eval:
   Enabled: false
+Lint/UselessAssignment:
+  Enabled: false
+  Exclude:
+    - lib/miron/websocket_connection.rb
 Metrics/AbcSize:
   Enabled: false
 Metrics/LineLength:
@@ -9,4 +13,6 @@ Metrics/MethodLength:
 Style/BracesAroundHashParameters:
   Enabled: false
 Style/Documentation:
+  Enabled: false
+Style/LineEndConcatenation:
   Enabled: false

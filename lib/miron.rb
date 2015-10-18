@@ -16,6 +16,7 @@ module Miron
   autoload :RequestFetcher, 'miron/request_fetcher'
   autoload :Server,    'miron/server'
   autoload :Utils,     'miron/utils'
+  autoload :WebsocketConnection, 'miron/websocket_connection'
 
   class Handler
     autoload :Puma,    'miron/handlers/puma'
