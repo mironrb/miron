@@ -68,6 +68,24 @@ run Hi"
   end
 end
 
+def create_mironfile_ssl(dir)
+  FileUtils.rm(dir + 'Mironfile4.rb') if File.exist?(dir + 'Mironfile4.rb')
+  (dir + 'Mironfile4.rb').open('w') do |f|
+    f << "class Hi
+  def self.call(request, response)
+    response.http_status = 200
+    response.headers = { 'HELLO' => 'HELLO'}
+    response.body = 'hi'
+    response.cookies = { 'HELLO' => 'HELLO' }
+    return response
+  end
+end
+
+use Miron::Middleware::SSL
+run Hi"
+  end
+end
+
 def create_mironfile_static(dir)
   FileUtils.rm(dir + 'Mironfile3.rb') if File.exist?(dir + 'Mironfile3.rb')
   (dir + 'Mironfile3.rb').open('w') do |f|

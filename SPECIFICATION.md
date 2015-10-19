@@ -33,6 +33,10 @@ request, then the value for the key may be an empty string.
 is provided in the client request, the hash should contain a
 `HTTP_SEC_WEBSOCKET_KEY` key, with a value that matches that of the HTTP
 header.
+- `HTTPS`: If the request is connecting over HTTPS, then this should be
+  true, otherwise false.
+- `HTTP_HOST`: The URL for the server, examples of this are:
+  'localhost:9290', or 'example.com'.
 
 All of the above hash keys and values were set via data from the client request.
 The following hash keys and values need to be set by the web server

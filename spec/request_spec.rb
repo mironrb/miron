@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Miron::Request do
   describe 'In general' do
     it 'can be initialized' do
-      request_hash = { 'PATH_INFO' => '/', 'REQUEST_METHOD' => 'GET' }
+      request_hash = { 'PATH_INFO' => '/', 'REQUEST_METHOD' => 'GET', 'HTTPS' => 'on' }
       request = Miron::Request.new(request_hash)
 
       expect(request.class).to eq(Miron::Request)
@@ -11,11 +11,11 @@ describe Miron::Request do
     end
 
     it 'modifies hash correctly' do
-      request_hash = { 'PATH_INFO' => '/', 'REQUEST_METHOD' => 'GET' }
+      request_hash = { 'PATH_INFO' => '/', 'REQUEST_METHOD' => 'GET', 'HTTPS' => 'on' }
       request = Miron::Request.new(request_hash)
 
-      expect(request.hash).to eq({ 'PATH' => '/', 'HTTP_METHOD' => 'GET' })
-      expect(request.hash).to_not eq({ 'PATH_INFO' => '/', 'REQUEST_METHOD' => 'GET' })
+      expect(request.hash).to eq({ 'PATH' => '/', 'HTTP_METHOD' => 'GET', 'HTTPS' => true })
+      expect(request.hash).to_not eq({ 'PATH_INFO' => '/', 'REQUEST_METHOD' => 'GET', 'HTTPS' => 'on' })
     end
   end
 

@@ -27,6 +27,7 @@ module Miron
 
   module Middleware
     autoload :BasicAuth, 'miron/middleware/basic_auth'
+    autoload :SSL,       'miron/middleware/ssl'
     autoload :Static,    'miron/middleware/static'
   end
 end

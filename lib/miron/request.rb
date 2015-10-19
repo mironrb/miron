@@ -6,8 +6,6 @@ module Miron
   # Miron::Request converts an env hash of HTTP variables to a proper {Miron::Request} object.
   #
   class Request
-    WS_MAGIC_STRING = '258EAFA5-E914-47DA-95CA-C5AB0DC85B11'
-
     attr_reader :request_hash
     attr_accessor :hash
 
@@ -18,6 +16,15 @@ module Miron
       @hash = request_hash
       fix_hash_keys
     end
+
+    def ssl?
+      @hash['HTTPS']
+    end
+
+    # Websockets
+    #-----------------------------------------------------------------------------#
+
+    WS_MAGIC_STRING = '258EAFA5-E914-47DA-95CA-C5AB0DC85B11'
 
     def setup_websocket
       if @hash['SERVER_SOFTWARE'].include?('WEBrick')
@@ -50,6 +57,8 @@ module Miron
     private
 
     # Make request hash keys easier to understand.
+    # This should be here until all in tree handlers convert to Miron.
+    # #rackhacks
     def fix_hash_keys
       # Convert PATH_INFO to PATH
       return unless @hash['PATH_INFO']
@@ -60,6 +69,16 @@ module Miron
       return unless @hash['REQUEST_METHOD']
       @hash['HTTP_METHOD'] = @hash['REQUEST_METHOD']
       @hash.delete('REQUEST_METHOD')
+
+      # Set HTTPS hash key
+      return unless @hash['HTTPS'] && !@hash.is_a?(String)
+
+      if @hash['HTTPS'] == 'on'
+        @hash.delete('HTTPS')
+        @hash['HTTPS'] = true
+      else
+        @hash['HTTPS'] = false
+      end
     end
   end
 end
