@@ -17,6 +17,10 @@ module Miron
       fix_hash_keys
     end
 
+    def method
+      @hash['HTTP_METHOD']
+    end
+
     def ssl?
       @hash['HTTPS']
     end
@@ -61,18 +65,19 @@ module Miron
     # #rackhacks
     def fix_hash_keys
       # Convert PATH_INFO to PATH
-      return unless @hash['PATH_INFO']
-      @hash['PATH'] = @hash['PATH_INFO']
-      @hash.delete('PATH_INFO')
+      if @hash['PATH_INFO']
+        @hash['PATH'] = @hash['PATH_INFO']
+        @hash.delete('PATH_INFO')
+      end
 
       # Convert REQUEST_METHOD to HTTP_METHOD
-      return unless @hash['REQUEST_METHOD']
-      @hash['HTTP_METHOD'] = @hash['REQUEST_METHOD']
-      @hash.delete('REQUEST_METHOD')
+      if @hash['REQUEST_METHOD']
+        @hash['HTTP_METHOD'] = @hash['REQUEST_METHOD']
+        @hash.delete('REQUEST_METHOD')
+      end
 
       # Set HTTPS hash key
-      return unless @hash['HTTPS'] && !@hash.is_a?(String)
-
+      return unless @hash['HTTPS'] && @hash['HTTPS'].is_a?(String)
       if @hash['HTTPS'] == 'on'
         @hash.delete('HTTPS')
         @hash['HTTPS'] = true

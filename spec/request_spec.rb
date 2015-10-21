@@ -19,6 +19,34 @@ describe Miron::Request do
     end
   end
 
+  describe '#method' do
+    it 'returns the correct HTTP method' do
+      request_hash = { 'REQUEST_METHOD' => 'GET' }
+      request = Miron::Request.new(request_hash)
+
+      expect(request.method).to eq('GET')
+    end
+  end
+
+  describe '#ssl?' do
+    it 'returns the correct value' do
+      request_hash_1 = { 'HTTPS' => 'on' }
+      request_hash_2 = { 'HTTPS' => true }
+      request_1 = Miron::Request.new(request_hash_1)
+      request_2 = Miron::Request.new(request_hash_2)
+
+      expect(request_1.ssl?).to eq(true)
+      expect(request_2.ssl?).to eq(true)
+    end
+
+    it 'returns the correct value' do
+      request_hash = { 'HTTPS' => false }
+      request = Miron::Request.new(request_hash)
+
+      expect(request.ssl?).to eq(false)
+    end
+  end
+
   describe '#setup_websocket' do
     context 'incompatible server' do
       it 'fails with NotImplementedError' do
