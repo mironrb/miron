@@ -53,8 +53,8 @@ describe Miron::Middleware::Static do
       expect(response.headers['Content-Length']).to eq('3')
       expect(response.headers['Content-Type']).to eq('text/plain')
       time = Time.parse(response.headers['Last-Modified'])
-      expect(time.month).to eq(10)
-      expect(time.year).to eq(2015)
+      expect(time.month).to eq(Date.today.month)
+      expect(time.year).to eq(Date.today.year)
     end
 
     it 'returns the correct HTTP status' do
