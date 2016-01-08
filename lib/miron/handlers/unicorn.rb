@@ -1,7 +1,7 @@
 require 'unicorn'
 
 module Miron
-  class Handler
+  module Handler
     class Unicorn < Unicorn::HttpServer
       def self.run(mironfile, options = {})
         Unicorn::Proxy.new(mironfile, options)

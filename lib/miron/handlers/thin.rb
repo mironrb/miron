@@ -1,7 +1,7 @@
 require 'thin'
 
 module Miron
-  class Handler
+  module Handler
     class Thin < Thin::Server
       def self.run(mironfile, options = {})
         Thin::Proxy.new(mironfile, options)

@@ -4,7 +4,7 @@ require 'logger'
 require 'stringio'
 
 module Miron
-  class Handler
+  module Handler
     class WEBrick < ::WEBrick::HTTPServlet::AbstractServlet
       def self.run(mironfile, options = {})
         options[:BindAddress] = options['host']

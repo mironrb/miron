@@ -18,7 +18,7 @@ module Miron
   autoload :Utils,     'miron/utils'
   autoload :WebsocketConnection, 'miron/websocket_connection'
 
-  class Handler
+  module Handler
     autoload :Puma,    'miron/handlers/puma'
     autoload :Thin,    'miron/handlers/thin'
     autoload :Unicorn, 'miron/handlers/unicorn'

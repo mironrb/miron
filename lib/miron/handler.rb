@@ -1,5 +1,5 @@
 module Miron
-  class Handler
+  module Handler
     # @param  [String] handler_name
     #         inheritor of {Miron::Handler} to try and use to run a Miron-backed server
     #

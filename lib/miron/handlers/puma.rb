@@ -1,7 +1,7 @@
 require 'puma'
 
 module Miron
-  class Handler
+  module Handler
     class Puma
       def self.run(mironfile, options = {})
         Puma::Proxy.new(mironfile, options)
