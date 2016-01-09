@@ -15,6 +15,10 @@ def get
   HTTParty.get('http://0.0.0.0:9290')
 end
 
+def get_http2
+  # see https://github.com/igrigorik/http-2/blob/master/example/client.rb
+end
+
 def get_basic_auth(auth:)
   if auth == true
     credentials = { username: 'hello', password: 'hello' }

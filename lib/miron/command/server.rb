@@ -8,7 +8,9 @@ module Miron
         [
           ['--port=PORT', 'Port to run the Mironfile on'],
           ['--handler=HANDLER', 'Handler to use for your Miron-backed server'],
-          ['--mironfile=MIRONFILE', 'Path to Mironfile, if you are not planning on using a Mironfile.rb']
+          ['--mironfile=MIRONFILE', 'Path to Mironfile, if you are not planning on using a Mironfile.rb'],
+          ['--ssl-cert=CERT', 'SSL certificate to use']#,
+          #[]
         ].concat(super)
       end
 
@@ -16,6 +18,8 @@ module Miron
         @options = {}
         @options['port'] = argv.option('port') || 9290
         @options['handler'] = argv.option('handler')
+        #@options['ssl-cert'] = argv.option('ssl-cert')
+        #@options['ssl-key'] = argv.option('ssl-key')
         if argv.options.key?('mironfile')
           @options['mironfile'] = Pathname.pwd + argv.option('mironfile')
         end

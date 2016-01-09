@@ -19,6 +19,7 @@ module Miron
   autoload :WebsocketConnection, 'miron/websocket_connection'
 
   module Handler
+    autoload :Http2,   'miron/handlers/http2'
     autoload :Puma,    'miron/handlers/puma'
     autoload :Thin,    'miron/handlers/thin'
     autoload :Unicorn, 'miron/handlers/unicorn'
