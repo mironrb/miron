@@ -9,7 +9,7 @@ Metrics/AbcSize:
 Metrics/LineLength:
   Max: 140
 Metrics/MethodLength:
-  Max: 25
+  Max: 45
 Style/BracesAroundHashParameters:
   Enabled: false
 Style/Documentation:

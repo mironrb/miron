@@ -1,7 +1,7 @@
 module Miron
   class RequestFetcher
-    def initialize(request, mironfile)
-      @request = Miron::Request.new(request)
+    def initialize(request, protocol, mironfile)
+      @request = Miron::Request.new(request, protocol)
       @mironfile = mironfile
       @response = Miron::Response.new
     end

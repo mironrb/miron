@@ -25,7 +25,9 @@ module Miron
         end
 
         def initialize(mironfile, options)
+          @mironfile = mironfile
           @options = options
+
           server = setup_server
           puts 'Starting Http2 server...'
 
@@ -46,7 +48,8 @@ module Miron
 
             conn.on(:stream) do |stream|
               log = Logger.new(stream.id)
-              req, buffer = {}, ''
+              req = {}
+              buffer = ''
 
               stream.on(:active) { log.info 'cliend opened new stream' }
               stream.on(:close)  { log.info 'stream closed' }
@@ -62,32 +65,12 @@ module Miron
               end
 
               stream.on(:half_close) do
-                log.info 'client closed its end of the stream'
-
-                response = nil
-                if req[':method'] == 'POST'
-                  log.info "Received POST request, payload: #{buffer}"
-                  response = "Hello HTTP 2.0! POST payload: #{buffer}"
-                else
-                  log.info 'Received GET request'
-                  response = 'Hello HTTP 2.0! GET request'
-                end
-
-                stream.headers({
-                  ':status' => '200',
-                  'content-length' => response.bytesize.to_s,
-                  'content-type' => 'text/plain',
-                }, end_stream: false)
-
-                # split response into multiple DATA frames
-                stream.data(response.slice!(0, 5), end_stream: false)
-                stream.data(response)
+                fetch_response
               end
             end
 
             while !sock.closed? && !(sock.eof? rescue true) # rubocop:disable Style/RescueModifier
               data = sock.readpartial(1024)
-              # puts "Received bytes: #{data.unpack("H*").first}"
 
               begin
                 conn << data
@@ -101,12 +84,35 @@ module Miron
 
         private
 
+        def fetch_response
+          miron_request = req
+          miron_response = Miron::RequestFetcher.new(miron_request, 'HTTP-2-0', @mironfile).fetch_response
+
+          default_headers = {
+            ':status' => miron_response.http_status.to_s,
+            'content-length' => miron_response.body.bytesize.to_s,
+            'content-type' => 'text/plain'
+          }
+
+          response_headers = default_headers.merge!(miron_response.headers)
+          stream.headers(response_headers, end_stream: false)
+
+          require 'pry'; binding.pry
+          # split response into multiple DATA frames
+          stream.data(miron_response.body.slice!(0, 5), end_stream: false)
+          stream.data(miron_response.body)
+        end
+
         def setup_server
           server = TCPServer.new(@options['port'])
 
           ctx = OpenSSL::SSL::SSLContext.new
-          ctx.cert = OpenSSL::X509::Certificate.new(File.open('keys/mycert.pem'))
-          ctx.key = OpenSSL::PKey::RSA.new(File.open('keys/mykey.pem'))
+
+          ssl_cert = @options['ssl-cert'] || 'keys/mycert.pem'
+          ctx.cert = OpenSSL::X509::Certificate.new(File.open(ssl_cert))
+
+          ssl_key = @options['ssl-key'] || 'keys/mykey.pem'
+          ctx.key = OpenSSL::PKey::RSA.new(File.open(ssl_key))
           ctx.npn_protocols = [DRAFT]
 
           OpenSSL::SSL::SSLServer.new(server, ctx)

@@ -15,8 +15,8 @@ def get
   HTTParty.get('http://0.0.0.0:9290')
 end
 
-def get_http2
-  # see https://github.com/igrigorik/http-2/blob/master/example/client.rb
+def gethttp2
+  HTTP2Listener.new
 end
 
 def get_basic_auth(auth:)
