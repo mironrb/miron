@@ -14,6 +14,16 @@ module Miron
       class Http2Server
         DRAFT = 'h2'
 
+        class Logger
+          def initialize(id)
+            @id = id
+          end
+
+          def info(msg)
+            puts "[Stream #{@id}]: #{msg}"
+          end
+        end
+
         def initialize(mironfile, options)
           @options = options
           server = setup_server
@@ -25,7 +35,6 @@ module Miron
 
             conn = HTTP2::Server.new
             conn.on(:frame) do |bytes|
-              # puts "Writing bytes: #{bytes.unpack("H*").first}"
               sock.write bytes
             end
             conn.on(:frame_sent) do |frame|
