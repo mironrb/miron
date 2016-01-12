@@ -4,6 +4,8 @@
 * Add `HTTPS` hash key to Miron Specification - [@maclover7](https://github.com/maclover7).
 * Add `HTTP_HOST` hash key to Miron Specification - [@maclover7](https://github.com/maclover7).
 * Add `method` to `Miron::Request` - [@maclover7](https://github.com/maclover7).
+* All middlewares and apps must be instantiated, not more class
+  methods! - [@maclover7](https://github.com/maclover7).
 
 ### 0.0.4 - (10/17/2015)
 * Refactor request processing to use `Miron::RequestFetcher`, and not

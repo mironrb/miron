@@ -37,19 +37,8 @@ module Miron
 
     # Takes an argument that is an object that responds to #call and returns a {Miron::Response}.
     #
-    #   class Heartbeat
-    #     def self.call(request, response)
-    #       response.http_status = 200
-    #       response.headers = { "Content-Type" => "text/plain" }
-    #       response.body = "OK"
-    #     end
-    #   end
-    #
-    #   run Heartbeat
-    #
     #   If you want to provide parameters besides for request and response to your app, you can do
-    #   this too! Important: if you are initializing your app, you MUST change th call method to be
-    #   on the instance of the class, not as a class method. See the below example for more information.
+    #   this too! See the below example for more information.
     #
     #   class Heartbeat
     #     def initialize(hi)
@@ -67,7 +56,7 @@ module Miron
     #
     def run(app_constant, *args)
       if args.empty?
-        @app = app_constant
+        @app = app_constant.new
       else
         @app = app_constant.new(args)
       end
@@ -75,26 +64,8 @@ module Miron
 
     # Takes an argument that is an object that responds to #call and returns a {Miron::Response}.
     #
-    #   class Middle
-    #     def self.call(request, response)
-    #       puts "hello from middle"
-    #     end
-    #   end
-    #
-    #   class Heartbeat
-    #     def self.call(request, response)
-    #       response.http_status = 200
-    #       response.headers = { "Content-Type" => "text/plain" }
-    #       response.body = "OK"
-    #     end
-    #   end
-    #
-    #   use Middle
-    #   run Heartbeat
-    #
     #   If you want to provide parameters besides for request and response to your middleware, you can do
-    #   this too! Important: if you are initializing your middleware, you MUST change th call method to be
-    #   on the instance of the class, not as a class method. See the below example for more information.
+    #   this too! See the below example for more information.
     #
     #   class Middle
     #     def initialize(hi)
@@ -107,7 +78,7 @@ module Miron
     #   end
     #
     #   class Heartbeat
-    #     def self.call(request, response)
+    #     def call(request, response)
     #       response.http_status = 200
     #       response.headers = { "Content-Type" => "text/plain" }
     #       response.body = @hi
@@ -119,7 +90,7 @@ module Miron
     #
     def use(middleware_constant, *args)
       if args.empty?
-        @middleware << middleware_constant
+        @middleware << middleware_constant.new
       else
         @middleware << middleware_constant.new(args)
       end
