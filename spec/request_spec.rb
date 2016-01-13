@@ -4,7 +4,7 @@ describe Miron::Request do
   describe 'In general' do
     it 'can be initialized' do
       request_hash = { 'PATH_INFO' => '/', 'REQUEST_METHOD' => 'GET', 'HTTPS' => 'on' }
-      request = Miron::Request.new(request_hash)
+      request = Miron::Request.new(request_hash, HTTP_1_1)
 
       expect(request.class).to eq(Miron::Request)
       expect(request).to be_an_instance_of(Miron::Request)
@@ -12,7 +12,7 @@ describe Miron::Request do
 
     it 'modifies hash correctly' do
       request_hash = { 'PATH_INFO' => '/', 'REQUEST_METHOD' => 'GET', 'HTTPS' => 'on' }
-      request = Miron::Request.new(request_hash)
+      request = Miron::Request.new(request_hash, HTTP_1_1)
 
       expect(request.hash).to eq({ 'PATH' => '/', 'HTTP_METHOD' => 'GET', 'HTTPS' => true })
       expect(request.hash).to_not eq({ 'PATH_INFO' => '/', 'REQUEST_METHOD' => 'GET', 'HTTPS' => 'on' })
@@ -22,7 +22,7 @@ describe Miron::Request do
   describe '#method' do
     it 'returns the correct HTTP method' do
       request_hash = { 'REQUEST_METHOD' => 'GET' }
-      request = Miron::Request.new(request_hash)
+      request = Miron::Request.new(request_hash, HTTP_1_1)
 
       expect(request.method).to eq('GET')
     end
@@ -32,8 +32,8 @@ describe Miron::Request do
     it 'returns the correct value' do
       request_hash_1 = { 'HTTPS' => 'on' }
       request_hash_2 = { 'HTTPS' => true }
-      request_1 = Miron::Request.new(request_hash_1)
-      request_2 = Miron::Request.new(request_hash_2)
+      request_1 = Miron::Request.new(request_hash_1, HTTP_1_1)
+      request_2 = Miron::Request.new(request_hash_2, HTTP_1_1)
 
       expect(request_1.ssl?).to eq(true)
       expect(request_2.ssl?).to eq(true)
@@ -41,7 +41,7 @@ describe Miron::Request do
 
     it 'returns the correct value' do
       request_hash = { 'HTTPS' => false }
-      request = Miron::Request.new(request_hash)
+      request = Miron::Request.new(request_hash, HTTP_1_1)
 
       expect(request.ssl?).to eq(false)
     end
@@ -51,7 +51,7 @@ describe Miron::Request do
     context 'incompatible server' do
       it 'fails with NotImplementedError' do
         request_hash = { 'SERVER_SOFTWARE' => 'WEBrick' }
-        request = Miron::Request.new(request_hash)
+        request = Miron::Request.new(request_hash, HTTP_1_1)
 
         expect do
           request.setup_websocket
@@ -62,7 +62,7 @@ describe Miron::Request do
     context 'compatible server' do
       it 'does not fail with NotImplementedError' do
         request_hash = { 'SERVER_SOFTWARE' => 'Puma' }
-        request = Miron::Request.new(request_hash)
+        request = Miron::Request.new(request_hash, HTTP_1_1)
 
         expect do
           request.setup_websocket
@@ -79,7 +79,7 @@ describe Miron::Request do
 
         @miron_socket = Hi.new
         request_hash = { 'HTTP_SEC_WEBSOCKET_KEY' => '123', 'SERVER_SOFTWARE' => 'Puma', 'miron.socket' => @miron_socket }
-        request = Miron::Request.new(request_hash)
+        request = Miron::Request.new(request_hash, HTTP_1_1)
 
         expect(request.setup_websocket).to be_an_instance_of(Miron::WebsocketConnection)
       end
@@ -89,14 +89,14 @@ describe Miron::Request do
   describe '#websocket?' do
     it 'returns true correctly' do
       request_hash = { 'HTTP_METHOD' => 'GET', 'HTTP_SEC_WEBSOCKET_KEY' => 'LALALA' }
-      request = Miron::Request.new(request_hash)
+      request = Miron::Request.new(request_hash, HTTP_1_1)
 
       expect(request.websocket?).to eq(true)
     end
 
     it 'returns false correctly' do
       request_hash = { 'HTTP_METHOD' => 'POST', 'LALALA' => 'LALALA' }
-      request = Miron::Request.new(request_hash)
+      request = Miron::Request.new(request_hash, HTTP_1_1)
 
       expect(request.websocket?).to eq(false)
     end

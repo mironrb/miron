@@ -9,7 +9,7 @@ describe Miron::Middleware::SSL do
       create_mironfile_ssl(SpecHelper.temporary_directory)
       @mironfile = Miron::Mironfile.from_file(SpecHelper.temporary_directory + 'Mironfile4.rb')
       miron_request = { 'HTTPS' => true }
-      response = Miron::RequestFetcher.new(miron_request, @mironfile).fetch_response
+      response = Miron::RequestFetcher.new(miron_request, HTTP_1_1, @mironfile).fetch_response
 
       it 'returns the correct HTTP body' do
         expect(response.body).to eq('hi')
@@ -32,7 +32,7 @@ describe Miron::Middleware::SSL do
       create_mironfile_ssl(SpecHelper.temporary_directory)
       @mironfile = Miron::Mironfile.from_file(SpecHelper.temporary_directory + 'Mironfile4.rb')
       miron_request = { 'HTTPS' => false, 'HTTP_X_FORWARDED_PROTO' => 'https' }
-      response = Miron::RequestFetcher.new(miron_request, @mironfile).fetch_response
+      response = Miron::RequestFetcher.new(miron_request, HTTP_1_1, @mironfile).fetch_response
 
       it 'returns the correct HTTP body' do
         expect(response.body).to eq('hi')
@@ -55,7 +55,7 @@ describe Miron::Middleware::SSL do
       create_mironfile_ssl(SpecHelper.temporary_directory)
       @mironfile = Miron::Mironfile.from_file(SpecHelper.temporary_directory + 'Mironfile4.rb')
       miron_request = { 'HTTPS' => false, 'HTTP_HOST' => 'localhost:9295', 'HTTP_METHOD' => 'GET', 'PATH' => '/hello' }
-      response = Miron::RequestFetcher.new(miron_request, @mironfile).fetch_response
+      response = Miron::RequestFetcher.new(miron_request, HTTP_1_1, @mironfile).fetch_response
 
       it 'returns the correct HTTP body' do
         expect(response.body).to eq('')
@@ -74,7 +74,7 @@ describe Miron::Middleware::SSL do
       create_mironfile_ssl(SpecHelper.temporary_directory)
       @mironfile = Miron::Mironfile.from_file(SpecHelper.temporary_directory + 'Mironfile4.rb')
       miron_request = { 'HTTPS' => false, 'HTTP_HOST' => 'localhost:9295', 'HTTP_METHOD' => 'HEAD', 'PATH' => '/hello' }
-      response = Miron::RequestFetcher.new(miron_request, @mironfile).fetch_response
+      response = Miron::RequestFetcher.new(miron_request, HTTP_1_1, @mironfile).fetch_response
 
       it 'returns the correct HTTP body' do
         expect(response.body).to eq('')
@@ -93,7 +93,7 @@ describe Miron::Middleware::SSL do
       create_mironfile_ssl(SpecHelper.temporary_directory)
       @mironfile = Miron::Mironfile.from_file(SpecHelper.temporary_directory + 'Mironfile4.rb')
       miron_request = { 'HTTPS' => false, 'HTTP_HOST' => 'localhost:9295', 'HTTP_METHOD' => 'POST', 'PATH' => '/hello' }
-      response = Miron::RequestFetcher.new(miron_request, @mironfile).fetch_response
+      response = Miron::RequestFetcher.new(miron_request, HTTP_1_1, @mironfile).fetch_response
 
       it 'returns the correct HTTP body' do
         expect(response.body).to eq('')

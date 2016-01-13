@@ -11,6 +11,9 @@ Dir[ROOT.join('spec/support/**/*.rb')].each { |f| require f }
 
 ENV['TEST'] = 'true'
 
+HTTP_1_1 = 'HTTP-1-1'.freeze
+HTTP_2_0 = 'HTTP-2-0'.freeze
+
 def get
   HTTParty.get('http://0.0.0.0:9290')
 end

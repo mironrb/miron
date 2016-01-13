@@ -86,7 +86,7 @@ module Miron
 
         def fetch_response
           miron_request = req
-          miron_response = Miron::RequestFetcher.new(miron_request, 'HTTP-2-0', @mironfile).fetch_response
+          miron_response = Miron::RequestFetcher.new(miron_request, HTTP_2_0, @mironfile).fetch_response
 
           default_headers = {
             ':status' => miron_response.http_status.to_s,

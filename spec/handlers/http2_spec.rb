@@ -9,8 +9,8 @@ describe Miron::Handler::Http2 do
   end
 
   describe 'Handler' do
-    sample_http2_app
-    response = gethttp2
+    #sample_http2_app
+    #response = gethttp2
 
     it 'returns the correct HTTP body' do
       expect(response.body).to eq('hi')
