@@ -19,8 +19,8 @@ def sample_http2_app
   opts.merge!('ssl-cert' => Pathname.pwd.to_s + '/spec/support/keys/mycert.pem', 'ssl-key' => Pathname.pwd.to_s + '/spec/support/keys/mykey.pem')
 
   http2_server = Miron::Server.new(@mironfile, opts)
-  @thread = Thread.new { http2_server.start }
-  trap(:INT) { @thread.stop }
+  #@thread = Thread.new { http2_server.start }
+  #trap(:INT) { @thread.stop }
 end
 
 def sample_puma_app

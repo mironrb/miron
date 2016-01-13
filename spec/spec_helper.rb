@@ -5,20 +5,24 @@ require 'claide'
 require 'fileutils'
 require 'pry'
 require 'httparty'
+require 'http/2'
 
 ROOT = Pathname.new(File.expand_path('../../', __FILE__))
 Dir[ROOT.join('spec/support/**/*.rb')].each { |f| require f }
 
 ENV['TEST'] = 'true'
 
-HTTP_1_1 = 'HTTP-1-1'.freeze
-HTTP_2_0 = 'HTTP-2-0'.freeze
+HTTP_1_1 = Miron::HTTP_1_1
+#require 'pry'; binding.pry
+#'HTTP-1-1'.freeze
+HTTP_2_0 = Miron::HTTP_2_0
+#HTTP_2_0 = 'HTTP-2-0'.freeze
 
 def get
   HTTParty.get('http://0.0.0.0:9290')
 end
 
-def gethttp2
+def get_http2
   HTTP2Listener.new
 end
 

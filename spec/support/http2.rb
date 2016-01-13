@@ -1,8 +1,18 @@
 require 'socket'
 
 class HTTP2Listener
+  class Logger
+    def initialize(id)
+      @id = id
+    end
+
+    def info(msg)
+      puts "[Stream #{@id}]: #{msg}"
+    end
+  end
+
   def initialize
-    uri = URI.parse(ARGV[0] || 'http://localhost:9295/')
+    uri = URI.parse('http://localhost:9295/')
     tcp = TCPSocket.new(uri.host, uri.port)
     sock = nil
 
@@ -31,6 +41,7 @@ class HTTP2Listener
 
     conn = HTTP2::Client.new
     stream = conn.new_stream
+    logger = Logger.new(stream.id)
 
     stream.on(:close) do
       sock.close
@@ -51,8 +62,7 @@ class HTTP2Listener
 
       begin
         conn << data
-        puts "conn: #{conn}"
-        require 'pry'; binding.pry
+        logger.info "conn: #{conn}"
       rescue => e
         puts "Exception: #{e}, #{e.message} - closing socket."
         sock.close

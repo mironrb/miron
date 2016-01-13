@@ -97,7 +97,7 @@ module Miron
           response_headers = default_headers.merge!(miron_response.headers)
           stream.headers(response_headers, end_stream: false)
 
-          require 'pry'; binding.pry
+          #require 'pry'; binding.pry
           # split response into multiple DATA frames
           stream.data(miron_response.body.slice!(0, 5), end_stream: false)
           stream.data(miron_response.body)

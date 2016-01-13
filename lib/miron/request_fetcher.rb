@@ -29,7 +29,7 @@ module Miron
 
     # Allow only HTTP-1-1 and HTTP-2-0 requests
     def check_protocol
-      return unless @protocol == HTTP_1_1 || @protocol == HTTP_2_0
+      return unless !(@protocol == HTTP_1_1 || @protocol == HTTP_2_0)
       fail 'Miron only accepts HTTP/1.1 and HTTP/2 requests'
     end
   end

@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'http/2'
 
 describe Miron::Handler::Http2 do
   describe 'In general' do
@@ -10,7 +9,7 @@ describe Miron::Handler::Http2 do
 
   describe 'Handler' do
     #sample_http2_app
-    #response = gethttp2
+    #response = get_http2
 
     it 'returns the correct HTTP body' do
       expect(response.body).to eq('hi')
