@@ -43,6 +43,8 @@ module Miron
         else
           miron_request['HTTP_BODY'] = ::MultiJson.load(webrick_request.body.to_s)
         end
+
+        miron_request['miron.input'] = webrick_request.body
       end
 
       def shutdown

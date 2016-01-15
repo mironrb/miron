@@ -22,8 +22,33 @@ module Miron
       fix_hash_keys
     end
 
+    def fetch_multipart_data
+      return nil unless multipart?
+
+      tempfile = @hash['miron.input'].read
+
+      ## HEADER MANAGEMENT
+      file_headers = tempfile.split("\r\n\r\n")[0]
+      file_info = file_headers.split('; ')[2].split("\r\n")
+      file_name = file_info[0].delete!('""').split('=')[1]
+      file_type = file_info[1].split(' ')[1]
+
+      ## CONTENT MANAGEMENT
+      file_contents = tempfile.split("\r\n\r\n")[1].split("\r\n")[0]
+
+      {
+        file_contents: file_contents,
+        file_name: file_name,
+        file_type: file_type
+      }
+    end
+
     def method
       @hash['HTTP_METHOD']
+    end
+
+    def multipart?
+      @hash['CONTENT_TYPE'].include?('multipart/form-data')
     end
 
     def ssl?

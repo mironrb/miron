@@ -19,12 +19,54 @@ describe Miron::Request do
     end
   end
 
+  describe '#fetch_multipart_data' do
+    it 'returns correct hash' do
+      fixture_file = File.join(File.dirname(__FILE__), 'support/fixtures/testfile.txt')
+      @data = RestClient::Payload.generate(name_of_file_param: File.new(fixture_file)).read
+
+      request_hash = {
+        'CONTENT_LENGTH' => @data.bytesize.to_s,
+        'CONTENT_TYPE' => %(multipart/form-data; boundary=AaB03x),
+        'miron.input' => StringIO.new(@data)
+      }
+
+      request = Miron::Request.new(request_hash, HTTP_1_1)
+      result = request.fetch_multipart_data
+
+      expect(result.class).to eq(Hash)
+      expect(result.keys).to eq([:file_contents, :file_name, :file_type])
+      expect(result[:file_contents]).to eq("testfile\n")
+      expect(result[:file_name]).to eq('testfile.txt')
+      expect(result[:file_type]).to eq('text/plain')
+    end
+  end
+
   describe '#method' do
     it 'returns the correct HTTP method' do
       request_hash = { 'REQUEST_METHOD' => 'GET' }
       request = Miron::Request.new(request_hash, HTTP_1_1)
 
       expect(request.method).to eq('GET')
+    end
+  end
+
+  describe '#multipart?' do
+    context 'hash key present' do
+      it 'returns true' do
+        request_hash = { 'CONTENT_TYPE' => 'multipart/form-data' }
+        request = Miron::Request.new(request_hash, HTTP_1_1)
+
+        expect(request.multipart?).to eq(true)
+      end
+    end
+
+    context 'hash key not present' do
+      it 'returns false' do
+        request_hash = { 'CONTENT_TYPE' => 'not-multipart' }
+        request = Miron::Request.new(request_hash, HTTP_1_1)
+
+        expect(request.multipart?).to eq(false)
+      end
     end
   end
 

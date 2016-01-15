@@ -51,6 +51,8 @@ accessed through your web server.
 should take care to make sure that `miron.socket` will be activated, and
 thus the request socket-ified (isn't it fun to make up words?), when
 `.call` is done on the `miron.socket`.
+- `miron.input`: This should be a `Tempfile` or similar, and should be
+  set equal to a file being uploaded.
 
 # For Web Applications
 
