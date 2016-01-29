@@ -1,6 +1,10 @@
 require 'socket'
 
 class HTTP2Listener
+  DRAFT = 'h2'
+
+  attr_reader :data
+
   class Logger
     def initialize(id)
       @id = id
@@ -12,7 +16,7 @@ class HTTP2Listener
   end
 
   def initialize
-    uri = URI.parse('http://localhost:9295/')
+    uri = URI.parse('https://localhost:9295/')
     tcp = TCPSocket.new(uri.host, uri.port)
     sock = nil
 
@@ -42,6 +46,22 @@ class HTTP2Listener
     conn = HTTP2::Client.new
     stream = conn.new_stream
     logger = Logger.new(stream.id)
+
+    stream.on(:headers) do |h|
+      log.info "response headers: #{h}"
+      sock.close
+    end
+
+    conn.on(:frame) do |bytes|
+      puts "Sending bytes: #{bytes.unpack("H*").first}"
+      sock.print bytes
+      sock.flush
+    end
+
+    stream.on(:data) do |d|
+      log.info "response data chunk: <<#{d}>>"
+      sock.close
+    end
 
     stream.on(:close) do
       sock.close
