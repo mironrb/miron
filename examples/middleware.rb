@@ -17,7 +17,7 @@ class App
     # Set your String of HTTP body here.
     response.body = 'hi'
     # Set your Hash of HTTP cookies here.
-    # Don't worry about `Set-Cookie`, that is handled down the line for you. :)
+    # Don't worry about `Set-Cookie`, that's handled down the line for you. :)
     response.cookies = { 'HELLO' => 'HELLO' }
     # Finally, return the response upstream for delivery.
     return response
