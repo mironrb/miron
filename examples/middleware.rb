@@ -1,4 +1,4 @@
-# Here's an example of just a standard Miron app.
+# Here's an example of a standard Miron app.
 # This code should go into a `Mironfile.rb`.
 
 class AppMiddleware
