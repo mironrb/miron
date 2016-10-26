@@ -3,7 +3,7 @@
 
 class App
   def self.call(request, response)
-    # First, check and see if the request is a proper websockets request.
+    # First, check to see if the request is a proper websockets request.
     if request.websocket?
       # A new thread will be opened for each connection.
       Thread.new(request.setup_websocket) do |connection|
