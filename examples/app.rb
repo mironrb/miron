@@ -1,6 +1,5 @@
 # Here's an example of just a regular old Miron app.
 # This code should go into a `Mironfile.rb`.
-
 class App
   def call(request, response)
     # Set your Integer HTTP status here.
