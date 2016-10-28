@@ -1,5 +1,5 @@
 # Here's an example of using websockets in a Miron app.
-# This code should go into a `Mironfile.rb`.
+# This code should go into a `exampleMironApplication.rb`.
 
 class App
   def self.call(request, response)
