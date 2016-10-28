@@ -7,8 +7,8 @@ contents to skip directly to the part that's most important to you.
 
 **Thanks to Rack for serving as an inspiration while creating Miron.**
 
-- [For Web Servers]()
-- [For Web Applications]()
+- [For Web Servers](github.com/rack/rack)
+- [For Web Applications](github.com/rack/rack)
 
 # For Web Servers
 
