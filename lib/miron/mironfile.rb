@@ -4,7 +4,7 @@ module Miron
     #
     # @param  [Pathname] dir
     #         The directory where to look for the Mironfile.
-    #
+    
     # @return [Miron::Mironfile] Returns newly create {Miron::Mironfile}
     # @return [Nil] If no Mironfile was found in the given dir
     #
