@@ -8,6 +8,9 @@ require 'miron/version'
 # Miron: The Gem, The Myth, The Legend
 #
 module Miron
+  HTTP_1_1 = 'HTTP-1-1'.freeze
+  HTTP_2_0 = 'HTTP-2-0'.freeze
+
   autoload :Command,   'miron/command'
   autoload :Handler,   'miron/handler'
   autoload :Mironfile, 'miron/mironfile'
@@ -18,7 +21,8 @@ module Miron
   autoload :Utils,     'miron/utils'
   autoload :WebsocketConnection, 'miron/websocket_connection'
 
-  class Handler
+  module Handler
+    autoload :Http2,   'miron/handlers/http2'
     autoload :Puma,    'miron/handlers/puma'
     autoload :Thin,    'miron/handlers/thin'
     autoload :Unicorn, 'miron/handlers/unicorn'

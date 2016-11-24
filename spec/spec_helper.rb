@@ -5,14 +5,23 @@ require 'claide'
 require 'fileutils'
 require 'pry'
 require 'httparty'
+require 'http/2'
+require 'rest-client'
 
 ROOT = Pathname.new(File.expand_path('../../', __FILE__))
 Dir[ROOT.join('spec/support/**/*.rb')].each { |f| require f }
 
 ENV['TEST'] = 'true'
 
+HTTP_1_1 = Miron::HTTP_1_1
+HTTP_2_0 = Miron::HTTP_2_0
+
 def get
   HTTParty.get('http://0.0.0.0:9290')
+end
+
+def get_http2
+  HTTP2Listener.new
 end
 
 def get_basic_auth(auth:)

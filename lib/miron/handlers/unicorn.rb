@@ -1,7 +1,7 @@
 require 'unicorn'
 
 module Miron
-  class Handler
+  module Handler
     class Unicorn < Unicorn::HttpServer
       def self.run(mironfile, options = {})
         Unicorn::Proxy.new(mironfile, options)
@@ -15,8 +15,9 @@ module Miron
       def process_client(socket)
         # Get response
         miron_request = @request.read(socket)
+        miron_request['miron.input'] = miron_request['rack.input']
         miron_request['miron.socket'] = miron_request['rack.hijack']
-        miron_response = Miron::RequestFetcher.new(miron_request, @mironfile).fetch_response
+        miron_response = Miron::RequestFetcher.new(miron_request, HTTP_1_1, @mironfile).fetch_response
         # Process response
         response_http_status = miron_response.http_status
         # Add cookies to headers

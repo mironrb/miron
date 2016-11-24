@@ -45,14 +45,14 @@ describe Miron::Mironfile do
         create_mironfile(SpecHelper.temporary_directory)
       end
 
-      it 'returns a class, not an instance of app' do
+      it 'returns an instance of app' do
         mironfile = Miron::Mironfile.from_file(SpecHelper.temporary_directory + 'Mironfile.rb')
-        expect(mironfile.app.to_s).to end_with('Hi')
+        expect(mironfile.app.class.to_s).to end_with('Hi')
       end
 
-      it 'returns an class, not an instance of middleware' do
+      it 'returns an instance of middleware' do
         mironfile = Miron::Mironfile.from_file(SpecHelper.temporary_directory + 'Mironfile.rb')
-        expect(mironfile.middleware.first.to_s).to end_with('HiTwo')
+        expect(mironfile.middleware.first.class.to_s).to end_with('HiTwo')
       end
     end
   end

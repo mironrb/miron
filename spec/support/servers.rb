@@ -11,6 +11,18 @@ def sample_basic_auth_app(auth:)
   trap(:INT) { @thread.stop }
 end
 
+def sample_http2_app
+  create_mironfile(SpecHelper.temporary_directory)
+  @mironfile = Miron::Mironfile.from_dir(SpecHelper.temporary_directory)
+
+  opts = { 'handler' => 'http2', 'port' => '9295' }
+  opts.merge!('ssl-cert' => Pathname.pwd.to_s + '/spec/support/keys/mycert.pem', 'ssl-key' => Pathname.pwd.to_s + '/spec/support/keys/mykey.pem')
+
+  http2_server = Miron::Server.new(@mironfile, opts)
+  @thread = Thread.new { http2_server.start }
+  trap(:INT) { @thread.stop }
+end
+
 def sample_puma_app
   create_mironfile(SpecHelper.temporary_directory)
   @mironfile = Miron::Mironfile.from_dir(SpecHelper.temporary_directory)

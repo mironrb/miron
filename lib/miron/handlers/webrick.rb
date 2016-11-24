@@ -4,7 +4,7 @@ require 'logger'
 require 'stringio'
 
 module Miron
-  class Handler
+  module Handler
     class WEBrick < ::WEBrick::HTTPServlet::AbstractServlet
       def self.run(mironfile, options = {})
         options[:BindAddress] = options['host']
@@ -28,7 +28,7 @@ module Miron
       def service(webrick_request, webrick_response)
         miron_request = webrick_request.meta_vars
         parse_input_body(webrick_request, miron_request)
-        miron_response = Miron::RequestFetcher.new(miron_request, @mironfile).fetch_response
+        miron_response = Miron::RequestFetcher.new(miron_request, HTTP_1_1, @mironfile).fetch_response
 
         webrick_response.status = miron_response.http_status
         webrick_response.body << miron_response.body
@@ -43,6 +43,8 @@ module Miron
         else
           miron_request['HTTP_BODY'] = ::MultiJson.load(webrick_request.body.to_s)
         end
+
+        miron_request['miron.input'] = webrick_request.body
       end
 
       def shutdown

@@ -1,7 +1,7 @@
 module Miron
   module Middleware
     class SSL
-      def self.call(request, response)
+      def call(request, response)
         if check_ssl(request)
           # All good!
           true
@@ -11,7 +11,7 @@ module Miron
         end
       end
 
-      def self.check_ssl(request)
+      def check_ssl(request)
         if request.hash['HTTPS']
           true
         elsif request.hash['HTTP_X_FORWARDED_PROTO']
@@ -21,7 +21,7 @@ module Miron
         end
       end
 
-      def self.redirect_to_https(request, response)
+      def redirect_to_https(request, response)
         host = request.hash['HTTP_HOST']
         path = request.hash['PATH']
         location = "https://#{host}#{path}"

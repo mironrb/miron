@@ -2,7 +2,7 @@ def create_mironfile(dir)
   FileUtils.rm(dir + 'Mironfile.rb') if File.exist?(dir + 'Mironfile.rb')
   (dir + 'Mironfile.rb').open('w') do |f|
     f << "class Hi
-  def self.call(request, response)
+  def call(request, response)
     response.http_status = 200
     response.headers = { 'HELLO' => 'HELLO'}
     response.body = 'hi'
@@ -12,7 +12,7 @@ def create_mironfile(dir)
 end
 
 class HiTwo
-  def self.call(request, response)
+  def call(request, response)
   end
 end
 
@@ -54,7 +54,7 @@ def create_mironfile_basic_auth(dir)
   FileUtils.rm(dir + 'Mironfile2.rb') if File.exist?(dir + 'Mironfile2.rb')
   (dir + 'Mironfile2.rb').open('w') do |f|
     f << "class Hi
-  def self.call(request, response)
+  def call(request, response)
     response.http_status = 200
     response.headers = { 'HELLO' => 'HELLO'}
     response.body = 'hi'
@@ -72,7 +72,7 @@ def create_mironfile_ssl(dir)
   FileUtils.rm(dir + 'Mironfile4.rb') if File.exist?(dir + 'Mironfile4.rb')
   (dir + 'Mironfile4.rb').open('w') do |f|
     f << "class Hi
-  def self.call(request, response)
+  def call(request, response)
     response.http_status = 200
     response.headers = { 'HELLO' => 'HELLO'}
     response.body = 'hi'

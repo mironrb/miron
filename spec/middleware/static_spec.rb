@@ -53,8 +53,14 @@ describe Miron::Middleware::Static do
       expect(response.headers['Content-Length']).to eq('3')
       expect(response.headers['Content-Type']).to eq('text/plain')
       time = Time.parse(response.headers['Last-Modified'])
-      expect(time.month).to eq(Date.today.month)
-      expect(time.year).to eq(Date.today.year)
+
+      # Get last modified information from file
+      last_modified_date = File.mtime(ROOT + 'spec/support/hello/hi.txt')
+      last_modified_month = last_modified_date.month
+      last_modified_year = last_modified_date.year
+
+      expect(time.month).to eq(last_modified_month)
+      expect(time.year).to eq(last_modified_year)
     end
 
     it 'returns the correct HTTP status' do
